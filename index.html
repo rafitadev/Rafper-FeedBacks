@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafper Feedbacks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #eaeaea;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 30px 0;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #00d4ff, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        header p {
+            color: #8892b0;
+            margin-top: 10px;
+        }
+        .rom-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .rom-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #eaeaea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .rom-btn:hover, .rom-btn.active {
+            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+        }
+        .feedback-form {
+            background: rgba(22, 33, 62, 0.8);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #00d4ff;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #eaeaea;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+        .rating {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        .rating input { display: none; }
+        .rating label {
+            cursor: pointer;
+            font-size: 2rem;
+            color: #444;
+            transition: all 0.2s;
+        }
+        .rating label:hover,
+        .rating input:checked ~ label {
+            color: #ffd700;
+            transform: scale(1.2);
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            border: none;
+            border-radius: 10px;
+            color: #0f3460;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.5);
+        }
+        .feedbacks-list {
+            background: rgba(22, 33, 62, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .feedbacks-list h2 {
+            color: #00d4ff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .feedback-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #00d4ff;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .feedback-rom {
+            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #0f3460;
+        }
+        .feedback-date {
+            color: #8892b0;
+            font-size: 0.85rem;
+        }
+        .feedback-author {
+            font-weight: 600;
+            color: #ff6b6b;
+            margin-bottom: 5px;
+        }
+        .feedback-rating {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        .feedback-text {
+            color: #ccd6f6;
+            line-height: 1.6;
+        }
+        .empty-state {
+            text-align: center;
+            color: #8892b0;
+            padding: 40px;
+        }
+        .device-badge {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Rafper Feedbacks</h1>
+            <p>Feedback for Redmi Note 8 Custom ROMs</p>
+            <span class="device-badge">Device: Redmi Note 8 / 8T (Ginkgo/Willow)</span>
+        </header>
+
+        <div class="rom-selector">
+            <button class="rom-btn active" data-rom="HyperOS 1.0.2.0">HyperOS 1.0.2.0</button>
+            <button class="rom-btn" data-rom="HyperOS 2.0.6.0">HyperOS 2.0.6.0</button>
+            <button class="rom-btn" data-rom="HyperOS 2.0.8.0">HyperOS 2.0.8.0</button>
+            <button class="rom-btn" data-rom="HyperOS 2.0.224">HyperOS 2.0.224</button>
+        </div>
+
+        <div class="feedback-form">
+            <h2 style="color: #00d4ff; margin-bottom: 20px; text-align: center;">Submit Feedback</h2>
+            <div class="form-group">
+                <label for="author">Your Name / Nickname</label>
+                <input type="text" id="author" placeholder="Ex: Rafael, User123..." required maxlength="30">
+            </div>
+            <div class="form-group">
+                <label>Your Rating</label>
+                <div class="rating" id="rating">
+                    <input type="radio" name="rating" id="star5" value="5"><label for="star5">★</label>
+                    <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
+                    <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
+                    <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
+                    <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="feedback">Your Feedback</label>
+                <textarea id="feedback" rows="4" placeholder="Share your experience with the ROM: performance, bugs, battery, camera, etc..." required maxlength="1000"></textarea>
+            </div>
+            <button class="btn-submit" id="submitBtn">Submit Feedback</button>
+        </div>
+
+        <div class="feedbacks-list">
+            <h2>Received Feedbacks</h2>
+            <div id="feedbacksContainer">
+                <div class="empty-state">No feedback yet. Be the first to submit!</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ROMS = [
+            "HyperOS 1.0.2.0",
+            "HyperOS 2.0.6.0",
+            "HyperOS 2.0.8.0",
+            "HyperOS 2.0.224"
+        ];
+
+        let selectedRom = "HyperOS 1.0.2.0";
+        let currentRating = 0;
+
+        const romBtns = document.querySelectorAll('.rom-btn');
+        const ratingStars = document.querySelectorAll('.rating input');
+        const feedbackContainer = document.getElementById('feedbacksContainer');
+        const submitBtn = document.getElementById('submitBtn');
+
+        function loadFeedbacks() {
+            const stored = localStorage.getItem('rafper_feedbacks');
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function saveFeedbacks(feedbacks) {
+            localStorage.setItem('rafper_feedbacks', JSON.stringify(feedbacks));
+        }
+
+        function renderFeedbacks() {
+            const feedbacks = loadFeedbacks();
+            const filtered = feedbacks.filter(f => f.rom === selectedRom).reverse();
+            
+            if (filtered.length === 0) {
+                feedbackContainer.innerHTML = '<div class="empty-state">No feedback for this ROM yet.</div>';
+                return;
+            }
+
+            feedbackContainer.innerHTML = filtered.map(fb => `
+                <div class="feedback-item">
+                    <div class="feedback-header">
+                        <span class="feedback-rom">${fb.rom}</span>
+                        <span class="feedback-date">${new Date(fb.date).toLocaleString('en-US')}</span>
+                    </div>
+                    <div class="feedback-author">${fb.author}</div>
+                    <div class="feedback-rating">${'★'.repeat(fb.rating)}${'☆'.repeat(5 - fb.rating)}</div>
+                    <div class="feedback-text">${fb.text}</div>
+                </div>
+            `).join('');
+        }
+
+        romBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                romBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedRom = btn.dataset.rom;
+                renderFeedbacks();
+            });
+        });
+
+        ratingStars.forEach(star => {
+            star.addEventListener('change', () => {
+                currentRating = parseInt(star.value);
+            });
+        });
+
+        submitBtn.addEventListener('click', () => {
+            const author = document.getElementById('author').value.trim();
+            const text = document.getElementById('feedback').value.trim();
+
+            if (!author || !text || currentRating === 0) {
+                alert('Please fill all fields and select a rating!');
+                return;
+            }
+
+            const feedbacks = loadFeedbacks();
+            feedbacks.push({
+                rom: selectedRom,
+                author,
+                rating: currentRating,
+                text,
+                date: new Date().toISOString()
+            });
+            saveFeedbacks(feedbacks);
+
+            document.getElementById('author').value = '';
+            document.getElementById('feedback').value = '';
+            ratingStars.forEach(s => s.checked = false);
+            currentRating = 0;
+
+            renderFeedbacks();
+            alert('Feedback submitted successfully!');
+        });
+
+        renderFeedbacks();
+    </script>
+</body>
+</html>
