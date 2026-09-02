@@ -210,7 +210,8 @@
         </header>
 
         <div class="rom-selector">
-            <button class="rom-btn active" data-rom="HyperOS 1.0.2.0">HyperOS 1.0.2.0</button>
+            <button class="rom-btn active" data-rom="all">All ROMs</button>
+            <button class="rom-btn" data-rom="HyperOS 1.0.2.0">HyperOS 1.0.2.0</button>
             <button class="rom-btn" data-rom="HyperOS 2.0.6.0">HyperOS 2.0.6.0</button>
             <button class="rom-btn" data-rom="HyperOS 2.0.8.0">HyperOS 2.0.8.0</button>
             <button class="rom-btn" data-rom="HyperOS 2.0.224">HyperOS 2.0.224</button>
@@ -255,7 +256,7 @@
             "HyperOS 2.0.224"
         ];
 
-        let selectedRom = "HyperOS 1.0.2.0";
+        let selectedRom = "all";
         let currentRating = 0;
 
         const romBtns = document.querySelectorAll('.rom-btn');
@@ -287,14 +288,17 @@
 
         function renderFeedbacks() {
             const feedbacks = loadFeedbacks();
-            const filtered = feedbacks.filter(f => f.rom === selectedRom).reverse();
+            const filtered = selectedRom === "all" 
+                ? feedbacks 
+                : feedbacks.filter(f => f.rom === selectedRom);
+            const sorted = filtered.reverse();
             
-            if (filtered.length === 0) {
-                feedbackContainer.innerHTML = '<div class="empty-state">No feedback for this ROM yet.</div>';
+            if (sorted.length === 0) {
+                feedbackContainer.innerHTML = '<div class="empty-state">No feedback yet. Be the first to submit!</div>';
                 return;
             }
 
-            feedbackContainer.innerHTML = filtered.map(fb => `
+            feedbackContainer.innerHTML = sorted.map(fb => `
                 <div class="feedback-item">
                     <div class="feedback-header">
                         <span class="feedback-rom">${fb.rom}</span>
