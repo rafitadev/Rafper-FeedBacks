@@ -1,0 +1,32 @@
+# FIREBASE CONFIG TEMPLATE
+# 
+# INSTRUÇÕES:
+# 1. Acesse: https://console.firebase.google.com
+# 2. Selecione seu projeto (ou crie: "Criar projeto" → nome → continuar → desativar Analytics)
+# 3. Menu lateral: Build → Realtime Database → Criar banco → Modo de teste
+# 4. ⚙️ Configurações do projeto → aba Geral → role até "Seus apps"
+# 5. Clique no ícone Web (</>) → Nome: "rafper-site" → Registrar app
+# 6. COPIE o bloco firebaseConfig que aparecer
+# 7. Substitua ABAIXO os valores entre aspas
+# 8. Copie TODO o bloco abaixo e cole no index.html (linha ~300)
+
+const firebaseConfig = {
+  apiKey: "COLE_SUA_API_KEY_AQUI",
+  authDomain: "SEU_PROJETO.firebaseapp.com",
+  databaseURL: "https://SEU_PROJETO-default-rtdb.firebaseio.com",
+  projectId: "SEU_PROJETO",
+  storageBucket: "SEU_PROJETO.appspot.com",
+  messagingSenderId: "COLE_SEU_SENDER_ID_AQUI",
+  appId: "COLE_SEU_APP_ID_AQUI"
+};
+
+# EXEMPLO DE COMO FICA (NÃO USE ESTES VALORES):
+# const firebaseConfig = {
+#   apiKey: "AIzaSyCxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+#   authDomain: "rafper-feedbacks.firebaseapp.com",
+#   databaseURL: "https://rafper-feedbacks-default-rtdb.firebaseio.com",
+#   projectId: "rafper-feedbacks",
+#   storageBucket: "rafper-feedbacks.appspot.com",
+#   messagingSenderId: "123456789012",
+#   appId: "1:123456789012:web:abcdef1234567890"
+# };

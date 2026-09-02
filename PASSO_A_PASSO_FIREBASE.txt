@@ -1,0 +1,93 @@
+=================================================================
+PROMPT PARA VOCÊ EXECUTAR NO FIREBASE CONSOLE (PASSO A PASSO)
+=================================================================
+
+ABRA: https://console.firebase.google.com
+
+=================================================================
+PASSO 1 - CRIAR PROJETO (se não tiver)
+=================================================================
+[ ] Clique "Criar projeto"
+[ ] Nome: rafper-feedbacks
+[ ] Continuar → Desativar Google Analytics → Criar projeto
+[ ] Aguardar criar → Continuar
+
+=================================================================
+PASSO 2 - CRIAR REALTIME DATABASE
+=================================================================
+[ ] Menu lateral: Build → Realtime Database
+[ ] Clique "Criar banco de dados"
+[ ] Localização: us-central1 (ou mais perto)
+[ ] **IMPORTANTE**: Selecione "Iniciar no modo de teste"
+[ ] Ativar
+
+=================================================================
+PASSO 3 - PEGAR CONFIG DO SDK WEB
+=================================================================
+[ ] Canto superior esquerdo: ⚙️ Configurações do projeto
+[ ] Aba "Geral" (já abre nela)
+[ ] Role até "Seus apps"
+[ ] Clique ícone Web (</>) 
+[ ] Nome do app: rafper-site
+[ ] Registrar app
+[ ] **COPIE O BLOCO firebaseConfig INTEIRO** que aparece
+
+=================================================================
+PASSO 4 - COLAR NO index.html
+=================================================================
+[ ] Abra: /home/rafitadev/rafper-feedbacks/index.html
+[ ] Vá na linha 291 (const firebaseConfig = {)
+[ ] Substitua TUDO de linha 291 a 299 pelo que copiou
+[ ] Salve (Ctrl+O, Enter, Ctrl+X)
+
+=================================================================
+PASSO 5 - DEPLOY
+=================================================================
+[ ] Terminal:
+cd /home/rafitadev/rafper-feedbacks && git add . && git commit -m "Add Firebase config" && git push
+
+=================================================================
+PASSO 6 - TESTAR
+=================================================================
+[ ] Acesse: https://rafitadev.github.io/Rafper-FeedBacks/
+[ ] Deve aparecer "Connected - Live updates" (verde)
+[ ] Envie um feedback teste
+[ ] Abra em outra aba/navegador → deve aparecer instantaneamente
+
+=================================================================
+EXEMPLO DO QUE VOCÊ VAI COPIAR (formato):
+=================================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyC...",
+  authDomain: "seu-projeto.firebaseapp.com",
+  databaseURL: "https://seu-projeto-default-rtdb.firebaseio.com",
+  projectId: "seu-projeto",
+  storageBucket: "seu-projeto.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abc123"
+};
+
+=================================================================
+REGRAS DE SEGURANÇA (DEPOIS DE TESTAR)
+=================================================================
+No Realtime Database → Regras:
+{
+  "rules": {
+    "feedbacks": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": "date"
+    }
+  }
+}
+(Pode deixar assim para site público de feedback)
+
+=================================================================
+PRONTO! SEU SITE TERÁ:
+=================================================================
+✅ Feedbacks salvos no Firebase (compartilhados)
+✅ Todos usuários veem todos feedbacks
+✅ Tempo real (aparece na hora)
+✅ Grátis (1GB, 50k reads/dia)
+✅ Funciona no GitHub Pages
+=================================================================
