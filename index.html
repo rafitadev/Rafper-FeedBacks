@@ -97,7 +97,6 @@
             gap: 10px;
             justify-content: center;
             margin: 10px 0;
-            direction: rtl;
         }
         .rating input { display: none; }
         .rating label {
@@ -105,12 +104,14 @@
             font-size: 2rem;
             color: #444;
             transition: all 0.2s;
+            user-select: none;
         }
-        .rating label:hover,
-        .rating label:hover ~ label,
-        .rating input:checked ~ label {
+        .rating label:hover {
             color: #ffd700;
             transform: scale(1.2);
+        }
+        .rating label.filled {
+            color: #ffd700;
         }
         .btn-submit {
             width: 100%;
@@ -260,11 +261,11 @@
             <div class="form-group">
                 <label>Your Rating</label>
                 <div class="rating" id="rating">
-                    <input type="radio" name="rating" id="star5" value="5"><label for="star5">★</label>
-                    <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
-                    <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
-                    <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
-                    <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
+                    <input type="radio" name="rating" id="star5" value="5"><label for="star5" data-value="5">★</label>
+                    <input type="radio" name="rating" id="star4" value="4"><label for="star4" data-value="4">★</label>
+                    <input type="radio" name="rating" id="star3" value="3"><label for="star3" data-value="3">★</label>
+                    <input type="radio" name="rating" id="star2" value="2"><label for="star2" data-value="2">★</label>
+                    <input type="radio" name="rating" id="star1" value="1"><label for="star1" data-value="1">★</label>
                 </div>
             </div>
             <div class="form-group">
@@ -388,9 +389,33 @@
             });
         });
 
-        ratingStars.forEach(star => {
-            star.addEventListener('change', () => {
-                currentRating = parseInt(star.value);
+        const ratingLabels = document.querySelectorAll('.rating label');
+
+        ratingLabels.forEach(label => {
+            label.addEventListener('click', () => {
+                currentRating = parseInt(label.dataset.value);
+                // Update visual state
+                ratingLabels.forEach(l => {
+                    const val = parseInt(l.dataset.value);
+                    l.classList.toggle('filled', val <= currentRating);
+                });
+                // Also check the radio input
+                document.getElementById('star' + currentRating).checked = true;
+            });
+            // Hover effect
+            label.addEventListener('mouseenter', () => {
+                const hoverVal = parseInt(label.dataset.value);
+                ratingLabels.forEach(l => {
+                    const val = parseInt(l.dataset.value);
+                    l.classList.toggle('filled', val <= hoverVal);
+                });
+            });
+        });
+
+        document.getElementById('rating').addEventListener('mouseleave', () => {
+            ratingLabels.forEach(l => {
+                const val = parseInt(l.dataset.value);
+                l.classList.toggle('filled', val <= currentRating);
             });
         });
 
@@ -418,6 +443,7 @@
                 document.getElementById('author').value = '';
                 document.getElementById('feedback').value = '';
                 ratingStars.forEach(s => s.checked = false);
+                ratingLabels.forEach(l => l.classList.remove('filled'));
                 currentRating = 0;
 
                 alert('Feedback submitted successfully!');

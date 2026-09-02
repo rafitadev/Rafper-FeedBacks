@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "feedbacks": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": "date"
+    }
+  }
+}
