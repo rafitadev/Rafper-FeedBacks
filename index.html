@@ -97,6 +97,7 @@
             gap: 10px;
             justify-content: center;
             margin: 10px 0;
+            direction: rtl;
         }
         .rating input { display: none; }
         .rating label {
@@ -106,6 +107,7 @@
             transition: all 0.2s;
         }
         .rating label:hover,
+        .rating label:hover ~ label,
         .rating input:checked ~ label {
             color: #ffd700;
             transform: scale(1.2);
@@ -262,12 +264,25 @@
         const submitBtn = document.getElementById('submitBtn');
 
         function loadFeedbacks() {
-            const stored = localStorage.getItem('rafper_feedbacks');
-            return stored ? JSON.parse(stored) : [];
+            try {
+                const stored = localStorage.getItem('rafper_feedbacks');
+                const parsed = stored ? JSON.parse(stored) : [];
+                console.log('Loaded feedbacks:', parsed);
+                return parsed;
+            } catch (e) {
+                console.error('Error loading feedbacks:', e);
+                return [];
+            }
         }
 
         function saveFeedbacks(feedbacks) {
-            localStorage.setItem('rafper_feedbacks', JSON.stringify(feedbacks));
+            try {
+                localStorage.setItem('rafper_feedbacks', JSON.stringify(feedbacks));
+                console.log('Saved feedbacks:', feedbacks);
+            } catch (e) {
+                console.error('Error saving feedbacks:', e);
+                alert('Failed to save feedback. Storage may be full.');
+            }
         }
 
         function renderFeedbacks() {
