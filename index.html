@@ -258,6 +258,26 @@
         .telegram-btn svg {
             flex-shrink: 0;
         }
+        .checkbox-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: normal;
+            color: #8892b0;
+            font-size: 0.9rem;
+        }
+        .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #00d4ff;
+            cursor: pointer;
+        }
+        .form-group input[disabled] {
+            opacity: 0.5;
+            background: rgba(255, 255, 255, 0.02);
+        }
     </style>
 </head>
 <body>
@@ -295,7 +315,10 @@
             <h2 style="color: #00d4ff; margin-bottom: 20px; text-align: center;">Submit Feedback</h2>
             <div class="form-group">
                 <label for="author">Your Name / Nickname</label>
-                <input type="text" id="author" placeholder="Ex: Rafael, User123..." required maxlength="30">
+                <input type="text" id="author" placeholder="Ex: Rafael, User123..." maxlength="30">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="anonymousCheck"> Post as Anonymous
+                </label>
             </div>
             <div class="form-group">
                 <label>Your Rating</label>
@@ -429,6 +452,20 @@
         });
 
         const ratingLabels = document.querySelectorAll('.rating label');
+        const anonymousCheck = document.getElementById('anonymousCheck');
+        const authorInput = document.getElementById('author');
+
+        // Anonymous checkbox handler
+        anonymousCheck.addEventListener('change', () => {
+            if (anonymousCheck.checked) {
+                authorInput.disabled = true;
+                authorInput.placeholder = 'Anonymous';
+                authorInput.value = '';
+            } else {
+                authorInput.disabled = false;
+                authorInput.placeholder = 'Ex: Rafael, User123...';
+            }
+        });
 
         ratingLabels.forEach(label => {
             label.addEventListener('click', () => {
@@ -459,10 +496,15 @@
         });
 
         submitBtn.addEventListener('click', async () => {
-            const author = document.getElementById('author').value.trim();
+            const isAnonymous = anonymousCheck.checked;
+            const author = isAnonymous ? 'Anonymous' : document.getElementById('author').value.trim();
             const text = document.getElementById('feedback').value.trim();
 
-            if (!author || !text || currentRating === 0) {
+            if (!isAnonymous && !author) {
+                alert('Please enter your name or check "Post as Anonymous"');
+                return;
+            }
+            if (!text || currentRating === 0) {
                 alert('Please fill all fields and select a rating!');
                 return;
             }
@@ -483,6 +525,9 @@
                 document.getElementById('feedback').value = '';
                 ratingStars.forEach(s => s.checked = false);
                 ratingLabels.forEach(l => l.classList.remove('filled'));
+                anonymousCheck.checked = false;
+                authorInput.disabled = false;
+                authorInput.placeholder = 'Ex: Rafael, User123...';
                 currentRating = 0;
 
                 alert('Feedback submitted successfully!');
