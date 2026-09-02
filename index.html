@@ -128,6 +128,10 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(0, 212, 255, 0.5);
         }
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
         .feedbacks-list {
             background: rgba(22, 33, 62, 0.8);
             border-radius: 20px;
@@ -199,6 +203,31 @@
             font-size: 0.85rem;
             margin-bottom: 15px;
         }
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .status-connected {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+        }
+        .status-disconnected {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .status-dot.connected { background: #00d4ff; }
+        .status-dot.disconnected { background: #ff6b6b; }
     </style>
 </head>
 <body>
@@ -208,6 +237,11 @@
             <p>Feedback for Redmi Note 8 Custom ROMs</p>
             <span class="device-badge">Device: Redmi Note 8 / 8T (Ginkgo/Willow)</span>
         </header>
+
+        <div id="statusIndicator" class="status-indicator status-disconnected" style="display:none;">
+            <span class="status-dot disconnected"></span>
+            <span id="statusText">Connecting...</span>
+        </div>
 
         <div class="rom-selector">
             <button class="rom-btn active" data-rom="all">All ROMs</button>
@@ -243,12 +277,32 @@
         <div class="feedbacks-list">
             <h2>Received Feedbacks</h2>
             <div id="feedbacksContainer">
-                <div class="empty-state">No feedback yet. Be the first to submit!</div>
+                <div class="empty-state">Loading feedbacks...</div>
             </div>
         </div>
     </div>
 
-    <script>
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+        import { getDatabase, ref, push, onValue, off, query, orderByChild, limitToLast } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+        // TODO: Substitua pelo seu config do Firebase Console
+        const firebaseConfig = {
+            apiKey: "SUA_API_KEY",
+            authDomain: "SEU_PROJETO.firebaseapp.com",
+            databaseURL: "https://SEU_PROJETO-default-rtdb.firebaseio.com",
+            projectId: "SEU_PROJETO",
+            storageBucket: "SEU_PROJETO.appspot.com",
+            messagingSenderId: "SEU_SENDER_ID",
+            appId: "SEU_APP_ID"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const feedbacksRef = ref(db, 'feedbacks');
+
         const ROMS = [
             "HyperOS 1.0.2.0",
             "HyperOS 2.0.6.0",
@@ -258,40 +312,34 @@
 
         let selectedRom = "all";
         let currentRating = 0;
+        let allFeedbacks = [];
+        let unsubscribe = null;
 
         const romBtns = document.querySelectorAll('.rom-btn');
         const ratingStars = document.querySelectorAll('.rating input');
         const feedbackContainer = document.getElementById('feedbacksContainer');
         const submitBtn = document.getElementById('submitBtn');
+        const statusIndicator = document.getElementById('statusIndicator');
+        const statusText = document.getElementById('statusText');
+        const statusDot = statusIndicator.querySelector('.status-dot');
 
-        function loadFeedbacks() {
-            try {
-                const stored = localStorage.getItem('rafper_feedbacks');
-                const parsed = stored ? JSON.parse(stored) : [];
-                console.log('Loaded feedbacks:', parsed);
-                return parsed;
-            } catch (e) {
-                console.error('Error loading feedbacks:', e);
-                return [];
+        function setStatus(connected, message) {
+            statusIndicator.style.display = 'inline-flex';
+            if (connected) {
+                statusIndicator.className = 'status-indicator status-connected';
+                statusDot.className = 'status-dot connected';
+            } else {
+                statusIndicator.className = 'status-indicator status-disconnected';
+                statusDot.className = 'status-dot disconnected';
             }
-        }
-
-        function saveFeedbacks(feedbacks) {
-            try {
-                localStorage.setItem('rafper_feedbacks', JSON.stringify(feedbacks));
-                console.log('Saved feedbacks:', feedbacks);
-            } catch (e) {
-                console.error('Error saving feedbacks:', e);
-                alert('Failed to save feedback. Storage may be full.');
-            }
+            statusText.textContent = message;
         }
 
         function renderFeedbacks() {
-            const feedbacks = loadFeedbacks();
             const filtered = selectedRom === "all" 
-                ? feedbacks 
-                : feedbacks.filter(f => f.rom === selectedRom);
-            const sorted = filtered.reverse();
+                ? allFeedbacks 
+                : allFeedbacks.filter(f => f.rom === selectedRom);
+            const sorted = [...filtered].reverse();
             
             if (sorted.length === 0) {
                 feedbackContainer.innerHTML = '<div class="empty-state">No feedback yet. Be the first to submit!</div>';
@@ -311,6 +359,27 @@
             `).join('');
         }
 
+        function listenFeedbacks() {
+            if (unsubscribe) off(feedbacksRef, 'value', unsubscribe);
+            
+            const q = query(feedbacksRef, orderByChild('date'), limitToLast(100));
+            
+            unsubscribe = onValue(q, (snapshot) => {
+                setStatus(true, 'Connected - Live updates');
+                const data = snapshot.val();
+                allFeedbacks = [];
+                if (data) {
+                    Object.entries(data).forEach(([key, value]) => {
+                        allFeedbacks.push({ id: key, ...value });
+                    });
+                }
+                renderFeedbacks();
+            }, (error) => {
+                console.error('Firebase error:', error);
+                setStatus(false, 'Connection error - Check config');
+            });
+        }
+
         romBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 romBtns.forEach(b => b.classList.remove('active'));
@@ -326,7 +395,7 @@
             });
         });
 
-        submitBtn.addEventListener('click', () => {
+        submitBtn.addEventListener('click', async () => {
             const author = document.getElementById('author').value.trim();
             const text = document.getElementById('feedback').value.trim();
 
@@ -335,26 +404,35 @@
                 return;
             }
 
-            const feedbacks = loadFeedbacks();
-            feedbacks.push({
-                rom: selectedRom,
-                author,
-                rating: currentRating,
-                text,
-                date: new Date().toISOString()
-            });
-            saveFeedbacks(feedbacks);
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
 
-            document.getElementById('author').value = '';
-            document.getElementById('feedback').value = '';
-            ratingStars.forEach(s => s.checked = false);
-            currentRating = 0;
+            try {
+                await push(feedbacksRef, {
+                    rom: selectedRom === "all" ? "HyperOS 1.0.2.0" : selectedRom,
+                    author,
+                    rating: currentRating,
+                    text,
+                    date: new Date().toISOString()
+                });
 
-            renderFeedbacks();
-            alert('Feedback submitted successfully!');
+                document.getElementById('author').value = '';
+                document.getElementById('feedback').value = '';
+                ratingStars.forEach(s => s.checked = false);
+                currentRating = 0;
+
+                alert('Feedback submitted successfully!');
+            } catch (error) {
+                console.error('Error submitting:', error);
+                alert('Failed to submit. Check connection.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Feedback';
+            }
         });
 
-        renderFeedbacks();
+        // Start listening
+        listenFeedbacks();
     </script>
 </body>
 </html>
