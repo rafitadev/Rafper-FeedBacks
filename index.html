@@ -60,6 +60,27 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
         }
+        .android-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+            margin-left: 8px;
+            background: linear-gradient(135deg, #4caf50, #388e3c);
+            color: white;
+            border-radius: 10px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            line-height: 1;
+            box-shadow: 0 2px 6px rgba(76, 175, 80, 0.4);
+        }
+        .rom-btn.active .android-badge,
+        .rom-btn:hover .android-badge {
+            background: linear-gradient(135deg, #66bb6a, #43a047);
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.6);
+        }
         .feedback-form {
             background: rgba(22, 33, 62, 0.8);
             padding: 30px;
@@ -305,10 +326,10 @@
 
         <div class="rom-selector">
             <button class="rom-btn active" data-rom="all">All ROMs</button>
-            <button class="rom-btn" data-rom="HyperOS 1.0.2.0">HyperOS 1.0.2.0</button>
-            <button class="rom-btn" data-rom="HyperOS 2.0.6.0">HyperOS 2.0.6.0</button>
-            <button class="rom-btn" data-rom="HyperOS 2.0.8.0">HyperOS 2.0.8.0</button>
-            <button class="rom-btn" data-rom="HyperOS 2.0.224">HyperOS 2.0.224</button>
+            <button class="rom-btn" data-rom="HyperOS 1.0.2.0">HyperOS 1.0.2.0<span class="android-badge">14</span></button>
+            <button class="rom-btn" data-rom="HyperOS 2.0.6.0">HyperOS 2.0.6.0<span class="android-badge">14</span></button>
+            <button class="rom-btn" data-rom="HyperOS 2.0.8.0">HyperOS 2.0.8.0<span class="android-badge">14</span></button>
+            <button class="rom-btn" data-rom="HyperOS 2.0.224">HyperOS 2.0.224<span class="android-badge">15</span></button>
         </div>
 
         <div class="feedback-form">
