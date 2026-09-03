@@ -10,11 +10,64 @@
             padding: 0;
             box-sizing: border-box;
         }
+        :root {
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #161616;
+            --bg-tertiary: #1f1f1f;
+            --bg-card: #1a1a1a;
+            --border-color: #2a2a2a;
+            --text-primary: #eaeaea;
+            --text-secondary: #8892b0;
+            --accent-primary: #00d4ff;
+            --accent-secondary: #0099cc;
+            --accent-warm: #ff6b6b;
+            --star-empty: #333;
+            --star-filled: #ffd700;
+            --success: #4caf50;
+            --success-hover: #43a047;
+            --telegram: #0088cc;
+            --telegram-hover: #00a5e0;
+        }
+        [data-theme="dark-blue"] {
+            --bg-primary: #0a1628;
+            --bg-secondary: #0f1f3a;
+            --bg-tertiary: #142850;
+            --bg-card: #0f1f3a;
+            --border-color: #1e3a5f;
+        }
+        [data-theme="purple"] {
+            --bg-primary: #1a0a28;
+            --bg-secondary: #2a0f3a;
+            --bg-tertiary: #3a1450;
+            --bg-card: #2a0f3a;
+            --border-color: #3e1e5f;
+            --accent-primary: #bb86fc;
+            --accent-secondary: #9c5cfc;
+        }
+        [data-theme="green"] {
+            --bg-primary: #0a2816;
+            --bg-secondary: #0f3a1f;
+            --bg-tertiary: #145028;
+            --bg-card: #0f3a1f;
+            --border-color: #1e5f2a;
+            --accent-primary: #00ff88;
+            --accent-secondary: #00cc6a;
+            --success: #00ff88;
+            --success-hover: #00cc6a;
+        }
+        [data-theme="gray"] {
+            --bg-primary: #111111;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #242424;
+            --bg-card: #1a1a1a;
+            --border-color: #333333;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: var(--bg-primary);
             min-height: 100vh;
-            color: #eaeaea;
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
         }
         .container {
             max-width: 800px;
@@ -24,18 +77,142 @@
         header {
             text-align: center;
             padding: 30px 0;
+            position: relative;
         }
         header h1 {
             font-size: 2.5rem;
-            background: linear-gradient(90deg, #00d4ff, #ff6b6b);
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-warm));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         header p {
-            color: #8892b0;
+            color: var(--text-secondary);
             margin-top: 10px;
         }
+        .device-badge {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.2);
+            color: var(--accent-warm);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+        .telegram-links {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .telegram-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, var(--telegram), var(--telegram-hover));
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
+        }
+        .telegram-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6);
+        }
+        .telegram-btn svg { flex-shrink: 0; }
+
+        /* Settings Button */
+        .settings-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        .settings-btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            transform: rotate(90deg);
+        }
+
+        /* Settings Dropdown */
+        .settings-dropdown {
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            min-width: 280px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+        .settings-dropdown.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .settings-section {
+            margin-bottom: 20px;
+        }
+        .settings-section:last-child { margin-bottom: 0; }
+        .settings-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        .theme-options, .lang-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .theme-btn, .lang-btn {
+            flex: 1;
+            min-width: 60px;
+            padding: 10px 12px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .theme-btn:hover, .lang-btn:hover {
+            border-color: var(--accent-primary);
+        }
+        .theme-btn.active, .lang-btn.active {
+            border-color: var(--accent-primary);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--bg-primary);
+        }
+        .theme-btn span { display: block; font-size: 0.7rem; opacity: 0.7; }
+
         .rom-selector {
             display: flex;
             flex-wrap: wrap;
@@ -47,18 +224,18 @@
             padding: 12px 24px;
             border: none;
             border-radius: 25px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #eaeaea;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--border-color);
         }
         .rom-btn:hover, .rom-btn.active {
-            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+            color: var(--bg-primary);
         }
         .android-badge {
             display: inline-flex;
@@ -68,7 +245,7 @@
             height: 20px;
             padding: 0 6px;
             margin-left: 8px;
-            background: linear-gradient(135deg, #4caf50, #388e3c);
+            background: linear-gradient(135deg, var(--success), var(--success-hover));
             color: white;
             border-radius: 10px;
             font-size: 0.65rem;
@@ -78,15 +255,15 @@
         }
         .rom-btn.active .android-badge,
         .rom-btn:hover .android-badge {
-            background: linear-gradient(135deg, #66bb6a, #43a047);
+            background: linear-gradient(135deg, var(--success-hover), var(--success));
             box-shadow: 0 2px 8px rgba(76, 175, 80, 0.6);
         }
+
         .feedback-form {
-            background: rgba(22, 33, 62, 0.8);
+            background: var(--bg-card);
             padding: 30px;
             border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
             margin-bottom: 30px;
         }
         .form-group {
@@ -96,26 +273,30 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #00d4ff;
+            color: var(--accent-primary);
         }
         input, select, textarea {
             width: 100%;
             padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--border-color);
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            color: #eaeaea;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
             font-size: 1rem;
             transition: all 0.3s ease;
         }
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #00d4ff;
+            border-color: var(--accent-primary);
             box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+        input[disabled] {
+            opacity: 0.5;
+            background: var(--bg-secondary);
         }
         .rating {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
             margin: 10px 0;
         }
@@ -123,24 +304,38 @@
         .rating label {
             cursor: pointer;
             font-size: 2rem;
-            color: #444;
+            color: var(--star-empty);
             transition: all 0.2s;
             user-select: none;
         }
-        .rating label:hover {
-            color: #ffd700;
+        .rating label:hover,
+        .rating label.filled {
+            color: var(--star-filled);
             transform: scale(1.2);
         }
-        .rating label.filled {
-            color: #ffd700;
+        .checkbox-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: normal;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-primary);
+            cursor: pointer;
         }
         .btn-submit {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
             border: none;
             border-radius: 10px;
-            color: #0f3460;
+            color: var(--bg-primary);
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
@@ -154,24 +349,24 @@
             opacity: 0.6;
             cursor: not-allowed;
         }
+
         .feedbacks-list {
-            background: rgba(22, 33, 62, 0.8);
+            background: var(--bg-card);
             border-radius: 20px;
             padding: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
         }
         .feedbacks-list h2 {
-            color: #00d4ff;
+            color: var(--accent-primary);
             margin-bottom: 20px;
             text-align: center;
         }
         .feedback-item {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--bg-tertiary);
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 15px;
-            border-left: 4px solid #00d4ff;
+            border-left: 4px solid var(--accent-primary);
             animation: slideIn 0.3s ease;
         }
         @keyframes slideIn {
@@ -187,43 +382,34 @@
             gap: 10px;
         }
         .feedback-rom {
-            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
             padding: 5px 15px;
             border-radius: 15px;
             font-size: 0.85rem;
             font-weight: 600;
-            color: #0f3460;
+            color: var(--bg-primary);
         }
         .feedback-date {
-            color: #8892b0;
+            color: var(--text-secondary);
             font-size: 0.85rem;
         }
         .feedback-author {
             font-weight: 600;
-            color: #ff6b6b;
+            color: var(--accent-warm);
             margin-bottom: 5px;
         }
         .feedback-rating {
-            color: #ffd700;
+            color: var(--star-filled);
             margin-bottom: 10px;
         }
         .feedback-text {
-            color: #ccd6f6;
+            color: var(--text-primary);
             line-height: 1.6;
         }
         .empty-state {
             text-align: center;
-            color: #8892b0;
+            color: var(--text-secondary);
             padding: 40px;
-        }
-        .device-badge {
-            display: inline-block;
-            background: rgba(255, 107, 107, 0.2);
-            color: #ff6b6b;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            margin-bottom: 15px;
         }
         .status-indicator {
             display: inline-flex;
@@ -237,95 +423,83 @@
         }
         .status-connected {
             background: rgba(0, 212, 255, 0.2);
-            color: #00d4ff;
+            color: var(--accent-primary);
         }
         .status-disconnected {
             background: rgba(255, 107, 107, 0.2);
-            color: #ff6b6b;
+            color: var(--accent-warm);
         }
         .status-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
         }
-        .status-dot.connected { background: #00d4ff; }
-        .status-dot.disconnected { background: #ff6b6b; }
-        .telegram-links {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        .telegram-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            background: linear-gradient(135deg, #0088cc, #00a5e0);
-            color: white;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
-        }
-        .telegram-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6);
-            background: linear-gradient(135deg, #00a5e0, #0088cc);
-        }
-        .telegram-btn svg {
-            flex-shrink: 0;
-        }
-        .checkbox-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-            cursor: pointer;
-            font-weight: normal;
-            color: #8892b0;
-            font-size: 0.9rem;
-        }
-        .checkbox-label input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #00d4ff;
-            cursor: pointer;
-        }
-        .form-group input[disabled] {
-            opacity: 0.5;
-            background: rgba(255, 255, 255, 0.02);
-        }
+        .status-dot.connected { background: var(--accent-primary); }
+        .status-dot.disconnected { background: var(--accent-warm); }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
+            <button class="settings-btn" id="settingsBtn" aria-label="Settings">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+            </button>
+            <div class="settings-dropdown" id="settingsDropdown">
+                <div class="settings-section">
+                    <span class="settings-label">Theme</span>
+                    <div class="theme-options">
+                        <button class="theme-btn active" data-theme="default" title="Default Dark">
+                            <span>Default</span>
+                        </button>
+                        <button class="theme-btn" data-theme="gray" title="Pure Gray/Black">
+                            <span>Gray</span>
+                        </button>
+                        <button class="theme-btn" data-theme="dark-blue" title="Dark Blue">
+                            <span>Blue</span>
+                        </button>
+                        <button class="theme-btn" data-theme="purple" title="Purple">
+                            <span>Purple</span>
+                        </button>
+                        <button class="theme-btn" data-theme="green" title="Green">
+                            <span>Green</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <span class="settings-label">Language</span>
+                    <div class="lang-options">
+                        <button class="lang-btn active" data-lang="en">English</button>
+                        <button class="lang-btn" data-lang="es">Español</button>
+                        <button class="lang-btn" data-lang="ru">Русский</button>
+                        <button class="lang-btn" data-lang="it">Italiano</button>
+                    </div>
+                </div>
+            </div>
             <h1>Rafper Feedbacks</h1>
-            <p>Feedback for Redmi Note 8 Custom ROMs</p>
+            <p data-i18n="subtitle">Feedback for Redmi Note 8 Custom ROMs</p>
             <span class="device-badge">Device: Redmi Note 8 / 8T (Ginkgo/Willow)</span>
             <div class="telegram-links">
                 <a href="https://t.me/RafperTest" target="_blank" class="telegram-btn">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.42 15.58l-3.75.74-1.53-3.37L9 15.27l-2.67-1.75 3.33-.42L12 9.09l1.74 3.65 3.33.42-2.67 1.75 1.11 3.24-3.76-.74z"/></svg>
-                    <span>Channel</span>
+                    <span data-i18n="telegram_channel">Channel</span>
                 </a>
                 <a href="https://t.me/Gsis8890" target="_blank" class="telegram-btn">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.42 15.58l-3.75.74-1.53-3.37L9 15.27l-2.67-1.75 3.33-.42L12 9.09l1.74 3.65 3.33.42-2.67 1.75 1.11 3.24-3.76-.74z"/></svg>
-                    <span>Support Chat</span>
+                    <span data-i18n="telegram_support">Support Chat</span>
                 </a>
             </div>
         </header>
 
         <div id="statusIndicator" class="status-indicator status-disconnected" style="display:none;">
             <span class="status-dot disconnected"></span>
-            <span id="statusText">Connecting...</span>
+            <span id="statusText" data-i18n="connecting">Connecting...</span>
         </div>
 
         <div class="rom-selector">
-            <button class="rom-btn active" data-rom="all">All ROMs</button>
+            <button class="rom-btn active" data-rom="all" data-i18n="all_roms">All ROMs</button>
             <button class="rom-btn" data-rom="HyperOS 1.0.2.0">HyperOS 1.0.2.0<span class="android-badge">14</span></button>
             <button class="rom-btn" data-rom="HyperOS 2.0.6.0">HyperOS 2.0.6.0<span class="android-badge">14</span></button>
             <button class="rom-btn" data-rom="HyperOS 2.0.8.0">HyperOS 2.0.8.0<span class="android-badge">14</span></button>
@@ -333,16 +507,16 @@
         </div>
 
         <div class="feedback-form">
-            <h2 style="color: #00d4ff; margin-bottom: 20px; text-align: center;">Submit Feedback</h2>
+            <h2 style="color: var(--accent-primary); margin-bottom: 20px; text-align: center;" data-i18n="submit_feedback">Submit Feedback</h2>
             <div class="form-group">
-                <label for="author">Your Name / Nickname</label>
+                <label for="author" data-i18n="your_name">Your Name / Nickname</label>
                 <input type="text" id="author" placeholder="Ex: Rafael, User123..." maxlength="30">
                 <label class="checkbox-label">
-                    <input type="checkbox" id="anonymousCheck"> Post as Anonymous
+                    <input type="checkbox" id="anonymousCheck"> <span data-i18n="post_anonymous">Post as Anonymous</span>
                 </label>
             </div>
             <div class="form-group">
-                <label>Your Rating</label>
+                <label data-i18n="your_rating">Your Rating</label>
                 <div class="rating" id="rating">
                     <input type="radio" name="rating" id="star1" value="1"><label for="star1" data-value="1">★</label>
                     <input type="radio" name="rating" id="star2" value="2"><label for="star2" data-value="2">★</label>
@@ -352,16 +526,16 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="feedback">Your Feedback</label>
+                <label for="feedback" data-i18n="your_feedback">Your Feedback</label>
                 <textarea id="feedback" rows="4" placeholder="Share your experience with the ROM: performance, bugs, battery, camera, etc..." required maxlength="1000"></textarea>
             </div>
-            <button class="btn-submit" id="submitBtn">Submit Feedback</button>
+            <button class="btn-submit" id="submitBtn" data-i18n="submit">Submit Feedback</button>
         </div>
 
         <div class="feedbacks-list">
-            <h2>Received Feedbacks</h2>
+            <h2 data-i18n="received_feedbacks">Received Feedbacks</h2>
             <div id="feedbacksContainer">
-                <div class="empty-state">Loading feedbacks...</div>
+                <div class="empty-state" data-i18n="loading">Loading feedbacks...</div>
             </div>
         </div>
     </div>
@@ -381,51 +555,202 @@
             appId: "1:254959542657:web:553e0e3b8ba9843d794880"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const feedbacksRef = ref(db, 'feedbacks');
 
-        const ROMS = [
-            "HyperOS 1.0.2.0",
-            "HyperOS 2.0.6.0",
-            "HyperOS 2.0.8.0",
-            "HyperOS 2.0.224"
-        ];
+        // Translations
+        const translations = {
+            en: {
+                subtitle: "Feedback for Redmi Note 8 Custom ROMs",
+                telegram_channel: "Channel",
+                telegram_support: "Support Chat",
+                all_roms: "All ROMs",
+                connecting: "Connecting...",
+                submit_feedback: "Submit Feedback",
+                your_name: "Your Name / Nickname",
+                post_anonymous: "Post as Anonymous",
+                your_rating: "Your Rating",
+                your_feedback: "Your Feedback",
+                submit: "Submit Feedback",
+                received_feedbacks: "Received Feedbacks",
+                loading: "Loading feedbacks...",
+                connected: "Connected - Live updates",
+                error_connection: "Connection error - Check config",
+                empty_no_feedback: "No feedback yet. Be the first to submit!",
+                empty_rom: "No feedback for this ROM yet.",
+                fill_fields: "Please fill all fields and select a rating!",
+                fill_name_or_anon: "Please enter your name or check \"Post as Anonymous\"",
+                success: "Feedback submitted successfully!",
+                error_submit: "Failed to submit. Check connection."
+            },
+            es: {
+                subtitle: "Comentarios para ROMs personalizadas Redmi Note 8",
+                telegram_channel: "Canal",
+                telegram_support: "Chat de Soporte",
+                all_roms: "Todas las ROMs",
+                connecting: "Conectando...",
+                submit_feedback: "Enviar Comentario",
+                your_name: "Tu Nombre / Apodo",
+                post_anonymous: "Publicar como Anónimo",
+                your_rating: "Tu Valoración",
+                your_feedback: "Tu Comentario",
+                submit: "Enviar Comentario",
+                received_feedbacks: "Comentarios Recibidos",
+                loading: "Cargando comentarios...",
+                connected: "Conectado - Actualizaciones en vivo",
+                error_connection: "Error de conexión - Verifica la config",
+                empty_no_feedback: "Sin comentarios aún. ¡Sé el primero!",
+                empty_rom: "Sin comentarios para esta ROM aún.",
+                fill_fields: "¡Completa todos los campos y selecciona una valoración!",
+                fill_name_or_anon: "Ingresa tu nombre o marca \"Publicar como Anónimo\"",
+                success: "¡Comentario enviado con éxito!",
+                error_submit: "Error al enviar. Verifica la conexión."
+            },
+            ru: {
+                subtitle: "Отзывы для кастомных прошивок Redmi Note 8",
+                telegram_channel: "Канал",
+                telegram_support: "Чат поддержки",
+                all_roms: "Все прошивки",
+                connecting: "Подключение...",
+                submit_feedback: "Отправить отзыв",
+                your_name: "Ваше имя / Никнейм",
+                post_anonymous: "Отправить анонимно",
+                your_rating: "Ваша оценка",
+                your_feedback: "Ваш отзыв",
+                submit: "Отправить отзыв",
+                received_feedbacks: "Полученные отзывы",
+                loading: "Загрузка отзывов...",
+                connected: "Подключено - Обновления в реальном времени",
+                error_connection: "Ошибка подключения - Проверьте настройки",
+                empty_no_feedback: "Отзывов пока нет. Будьте первым!",
+                empty_rom: "Отзывов для этой прошивки пока нет.",
+                fill_fields: "Заполните все поля и выберите оценку!",
+                fill_name_or_anon: "Введите имя или отметьте \"Отправить анонимно\"",
+                success: "Отзыв успешно отправлен!",
+                error_submit: "Не удалось отправить. Проверьте соединение."
+            },
+            it: {
+                subtitle: "Feedback per Custom ROM Redmi Note 8",
+                telegram_channel: "Canale",
+                telegram_support: "Chat Supporto",
+                all_roms: "Tutte le ROM",
+                connecting: "Connessione...",
+                submit_feedback: "Invia Feedback",
+                your_name: "Il tuo Nome / Nickname",
+                post_anonymous: "Pubblica come Anonimo",
+                your_rating: "La tua Valutazione",
+                your_feedback: "Il tuo Feedback",
+                submit: "Invia Feedback",
+                received_feedbacks: "Feedback Ricevuti",
+                loading: "Caricamento feedback...",
+                connected: "Connesso - Aggiornamenti in tempo reale",
+                error_connection: "Errore connessione - Controlla config",
+                empty_no_feedback: "Nessun feedback ancora. Sii il primo!",
+                empty_rom: "Nessun feedback per questa ROM.",
+                fill_fields: "Compila tutti i campi e seleziona una valutazione!",
+                fill_name_or_anon: "Inserisci il nome o spunta \"Pubblica come Anonimo\"",
+                success: "Feedback inviato con successo!",
+                error_submit: "Invio fallito. Controlla la connessione."
+            }
+        };
 
+        let currentLang = 'en';
+        let currentTheme = 'default';
         let selectedRom = "all";
         let currentRating = 0;
         let allFeedbacks = [];
         let unsubscribe = null;
 
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsDropdown = document.getElementById('settingsDropdown');
+        const themeBtns = document.querySelectorAll('.theme-btn');
+        const langBtns = document.querySelectorAll('.lang-btn');
         const romBtns = document.querySelectorAll('.rom-btn');
-        const ratingStars = document.querySelectorAll('.rating input');
+        const ratingLabels = document.querySelectorAll('.rating label');
         const feedbackContainer = document.getElementById('feedbacksContainer');
         const submitBtn = document.getElementById('submitBtn');
         const statusIndicator = document.getElementById('statusIndicator');
         const statusText = document.getElementById('statusText');
         const statusDot = statusIndicator.querySelector('.status-dot');
+        const anonymousCheck = document.getElementById('anonymousCheck');
+        const authorInput = document.getElementById('author');
 
-        function setStatus(connected, message) {
+        // Settings dropdown toggle
+        settingsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            settingsDropdown.classList.toggle('open');
+        });
+        document.addEventListener('click', () => {
+            settingsDropdown.classList.remove('open');
+        });
+        settingsDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        // Theme switcher
+        themeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                themeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentTheme = btn.dataset.theme;
+                document.documentElement.setAttribute('data-theme', currentTheme === 'default' ? '' : currentTheme);
+                localStorage.setItem('rafper_theme', currentTheme);
+            });
+        });
+
+        // Language switcher
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentLang = btn.dataset.lang;
+                applyLanguage(currentLang);
+                localStorage.setItem('rafper_lang', currentLang);
+            });
+        });
+
+        function applyLanguage(lang) {
+            const t = translations[lang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (t[key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = t[key];
+                    } else {
+                        el.textContent = t[key];
+                    }
+                }
+            });
+            document.documentElement.lang = lang;
+            // Update dynamic texts
+            if (statusIndicator.style.display !== 'none') {
+                statusText.textContent = statusDot.classList.contains('connected') ? t.connected : t.connecting;
+            }
+            renderFeedbacks();
+        }
+
+        function setStatus(connected, messageKey) {
             statusIndicator.style.display = 'inline-flex';
+            const t = translations[currentLang];
             if (connected) {
                 statusIndicator.className = 'status-indicator status-connected';
                 statusDot.className = 'status-dot connected';
+                statusText.textContent = t[messageKey] || t.connected;
             } else {
                 statusIndicator.className = 'status-indicator status-disconnected';
                 statusDot.className = 'status-dot disconnected';
+                statusText.textContent = t[messageKey] || t.error_connection;
             }
-            statusText.textContent = message;
         }
 
         function renderFeedbacks() {
+            const t = translations[currentLang];
             const filtered = selectedRom === "all" 
                 ? allFeedbacks 
                 : allFeedbacks.filter(f => f.rom === selectedRom);
             const sorted = [...filtered].reverse();
             
             if (sorted.length === 0) {
-                feedbackContainer.innerHTML = '<div class="empty-state">No feedback yet. Be the first to submit!</div>';
+                feedbackContainer.innerHTML = `<div class="empty-state">${selectedRom === "all" ? t.empty_no_feedback : t.empty_rom}</div>`;
                 return;
             }
 
@@ -433,7 +758,7 @@
                 <div class="feedback-item">
                     <div class="feedback-header">
                         <span class="feedback-rom">${fb.rom}</span>
-                        <span class="feedback-date">${new Date(fb.date).toLocaleString('en-US')}</span>
+                        <span class="feedback-date">${new Date(fb.date).toLocaleString(lang === 'ru' ? 'ru-RU' : lang === 'es' ? 'es-ES' : lang === 'it' ? 'it-IT' : 'en-US')}</span>
                     </div>
                     <div class="feedback-author">${fb.author}</div>
                     <div class="feedback-rating">${'★'.repeat(fb.rating)}${'☆'.repeat(5 - fb.rating)}</div>
@@ -448,7 +773,7 @@
             const q = query(feedbacksRef, orderByChild('date'), limitToLast(100));
             
             unsubscribe = onValue(q, (snapshot) => {
-                setStatus(true, 'Connected - Live updates');
+                setStatus(true, 'connected');
                 const data = snapshot.val();
                 allFeedbacks = [];
                 if (data) {
@@ -459,7 +784,7 @@
                 renderFeedbacks();
             }, (error) => {
                 console.error('Firebase error:', error);
-                setStatus(false, 'Connection error - Check config');
+                setStatus(false, 'error_connection');
             });
         }
 
@@ -472,34 +797,15 @@
             });
         });
 
-        const ratingLabels = document.querySelectorAll('.rating label');
-        const anonymousCheck = document.getElementById('anonymousCheck');
-        const authorInput = document.getElementById('author');
-
-        // Anonymous checkbox handler
-        anonymousCheck.addEventListener('change', () => {
-            if (anonymousCheck.checked) {
-                authorInput.disabled = true;
-                authorInput.placeholder = 'Anonymous';
-                authorInput.value = '';
-            } else {
-                authorInput.disabled = false;
-                authorInput.placeholder = 'Ex: Rafael, User123...';
-            }
-        });
-
         ratingLabels.forEach(label => {
             label.addEventListener('click', () => {
                 currentRating = parseInt(label.dataset.value);
-                // Update visual state
                 ratingLabels.forEach(l => {
                     const val = parseInt(l.dataset.value);
                     l.classList.toggle('filled', val <= currentRating);
                 });
-                // Also check the radio input
                 document.getElementById('star' + currentRating).checked = true;
             });
-            // Hover effect
             label.addEventListener('mouseenter', () => {
                 const hoverVal = parseInt(label.dataset.value);
                 ratingLabels.forEach(l => {
@@ -516,22 +822,35 @@
             });
         });
 
+        // Anonymous checkbox handler
+        anonymousCheck.addEventListener('change', () => {
+            if (anonymousCheck.checked) {
+                authorInput.disabled = true;
+                authorInput.placeholder = translations[currentLang].post_anonymous;
+                authorInput.value = '';
+            } else {
+                authorInput.disabled = false;
+                authorInput.placeholder = translations[currentLang].your_name.includes('Nickname') ? 'Ex: Rafael, User123...' : 'Ex: Rafael, User123...';
+            }
+        });
+
         submitBtn.addEventListener('click', async () => {
+            const t = translations[currentLang];
             const isAnonymous = anonymousCheck.checked;
             const author = isAnonymous ? 'Anonymous' : document.getElementById('author').value.trim();
             const text = document.getElementById('feedback').value.trim();
 
             if (!isAnonymous && !author) {
-                alert('Please enter your name or check "Post as Anonymous"');
+                alert(t.fill_name_or_anon);
                 return;
             }
             if (!text || currentRating === 0) {
-                alert('Please fill all fields and select a rating!');
+                alert(t.fill_fields);
                 return;
             }
 
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting...';
+            submitBtn.textContent = t.submitting || 'Submitting...';
 
             try {
                 await push(feedbacksRef, {
@@ -544,22 +863,38 @@
 
                 document.getElementById('author').value = '';
                 document.getElementById('feedback').value = '';
-                ratingStars.forEach(s => s.checked = false);
+                document.querySelectorAll('.rating input').forEach(s => s.checked = false);
                 ratingLabels.forEach(l => l.classList.remove('filled'));
                 anonymousCheck.checked = false;
                 authorInput.disabled = false;
                 authorInput.placeholder = 'Ex: Rafael, User123...';
                 currentRating = 0;
 
-                alert('Feedback submitted successfully!');
+                alert(t.success);
             } catch (error) {
                 console.error('Error submitting:', error);
-                alert('Failed to submit. Check connection.');
+                alert(t.error_submit);
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit Feedback';
+                submitBtn.textContent = t.submit;
             }
         });
+
+        // Load saved preferences
+        const savedTheme = localStorage.getItem('rafper_theme');
+        const savedLang = localStorage.getItem('rafper_lang');
+        if (savedTheme) {
+            currentTheme = savedTheme;
+            document.documentElement.setAttribute('data-theme', currentTheme === 'default' ? '' : currentTheme);
+            themeBtns.forEach(b => b.classList.toggle('active', b.dataset.theme === currentTheme));
+        }
+        if (savedLang) {
+            currentLang = savedLang;
+            langBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
+            applyLanguage(currentLang);
+        } else {
+            applyLanguage(currentLang);
+        }
 
         // Start listening
         listenFeedbacks();
