@@ -758,7 +758,7 @@
                 <div class="feedback-item">
                     <div class="feedback-header">
                         <span class="feedback-rom">${fb.rom}</span>
-                        <span class="feedback-date">${new Date(fb.date).toLocaleString(lang === 'ru' ? 'ru-RU' : lang === 'es' ? 'es-ES' : lang === 'it' ? 'it-IT' : 'en-US')}</span>
+                        <span class="feedback-date">${new Date(fb.date).toLocaleString(currentLang === 'ru' ? 'ru-RU' : currentLang === 'es' ? 'es-ES' : currentLang === 'it' ? 'it-IT' : 'en-US')}</span>
                     </div>
                     <div class="feedback-author">${fb.author}</div>
                     <div class="feedback-rating">${'★'.repeat(fb.rating)}${'☆'.repeat(5 - fb.rating)}</div>
@@ -773,6 +773,7 @@
             const q = query(feedbacksRef, orderByChild('date'), limitToLast(100));
             
             unsubscribe = onValue(q, (snapshot) => {
+                console.log('Firebase snapshot received:', snapshot.exists() ? Object.keys(snapshot.val()).length + ' items' : 'empty');
                 setStatus(true, 'connected');
                 const data = snapshot.val();
                 allFeedbacks = [];
@@ -781,6 +782,7 @@
                         allFeedbacks.push({ id: key, ...value });
                     });
                 }
+                console.log('Total feedbacks loaded:', allFeedbacks.length);
                 renderFeedbacks();
             }, (error) => {
                 console.error('Firebase error:', error);
