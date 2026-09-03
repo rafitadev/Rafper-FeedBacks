@@ -436,6 +436,24 @@
         }
         .status-dot.connected { background: var(--accent-primary); }
         .status-dot.disconnected { background: var(--accent-warm); }
+        .site-footer {
+            text-align: center;
+            padding: 30px 20px 20px;
+            margin-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .site-footer a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+        .site-footer a:hover {
+            color: var(--accent-secondary);
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -538,6 +556,10 @@
                 <div class="empty-state" data-i18n="loading">Loading feedbacks...</div>
             </div>
         </div>
+
+        <footer class="site-footer">
+            <p>Rafper Project Is A Project Created By <a href="https://github.com/RafitaDev" target="_blank">@RafitaDev</a> With ❤️</p>
+        </footer>
     </div>
 
     <!-- Firebase SDK -->
