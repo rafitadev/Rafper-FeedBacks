@@ -454,11 +454,169 @@
             color: var(--accent-secondary);
             text-decoration: underline;
         }
+
+        /* Auth Modal */
+        .auth-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .auth-modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .auth-modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .auth-modal.open .auth-modal-content {
+            transform: scale(1);
+        }
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .auth-tab.active {
+            color: var(--accent-primary);
+        }
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-primary);
+        }
+        .auth-form { display: none; }
+        .auth-form.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .auth-form .form-group { margin-bottom: 16px; }
+        .auth-form label { display: block; margin-bottom: 6px; font-size: 0.9rem; color: var(--text-secondary); }
+        .auth-form input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-tertiary); color: var(--text-primary); font-size: 1rem; }
+        .auth-form input:focus { outline: none; border-color: var(--accent-primary); }
+        .auth-submit { width: 100%; padding: 14px; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); border: none; border-radius: 10px; color: var(--bg-primary); font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
+        .auth-close { position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--text-secondary); font-size: 1.5rem; cursor: pointer; }
+
+        /* User Menu */
+        .user-menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        .user-menu-btn:hover { background: var(--accent-primary); color: var(--bg-primary); }
+        .user-menu-btn.has-user { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: var(--bg-primary); }
+        .user-dropdown {
+            position: absolute;
+            top: 70px;
+            left: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px;
+            min-width: 220px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+        .user-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
+        .user-info { padding: 10px; border-bottom: 1px solid var(--border-color); margin-bottom: 8px; }
+        .user-name { font-weight: 600; color: var(--text-primary); }
+        .user-email { font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px; }
+        .user-anon { font-size: 0.8rem; color: var(--accent-warm); }
+        .user-dropdown button { width: 100%; text-align: left; padding: 10px 12px; background: none; border: none; color: var(--text-primary); font-size: 0.9rem; cursor: pointer; border-radius: 8px; transition: background 0.2s; }
+        .user-dropdown button:hover { background: var(--bg-tertiary); }
+        .user-dropdown button.danger { color: var(--accent-warm); }
+
+        /* Comments */
+        .comments-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .comments-toggle { background: none; border: none; color: var(--accent-primary); cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+        .comments-list { max-height: 200px; overflow-y: auto; margin-bottom: 12px; }
+        .comment-item { background: var(--bg-secondary); padding: 12px; border-radius: 10px; margin-bottom: 8px; animation: slideIn 0.3s ease; }
+        .comment-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.8rem; }
+        .comment-author { font-weight: 600; color: var(--accent-warm); }
+        .comment-date { color: var(--text-secondary); }
+        .comment-text { color: var(--text-primary); line-height: 1.5; font-size: 0.9rem; }
+        .comment-form { display: flex; gap: 8px; }
+        .comment-form textarea { flex: 1; min-height: 60px; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-tertiary); color: var(--text-primary); font-size: 0.9rem; resize: vertical; font-family: inherit; }
+        .comment-form textarea:focus { outline: none; border-color: var(--accent-primary); }
+        .comment-submit { padding: 10px 16px; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); border: none; border-radius: 8px; color: var(--bg-primary); font-weight: 600; cursor: pointer; font-size: 0.85rem; white-space: nowrap; }
+        .comment-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+        .login-prompt { text-align: center; padding: 16px; color: var(--text-secondary); font-size: 0.85rem; }
+        .login-prompt button { background: none; border: none; color: var(--accent-primary); font-weight: 600; cursor: pointer; text-decoration: underline; }
+
     </style>
 </head>
 <body>
     <div class="container">
         <header>
+            <button class="user-menu-btn" id="userMenuBtn" aria-label="User Menu">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+            </button>
+            <div class="user-dropdown" id="userDropdown">
+                <div class="user-info" id="userInfo">
+                    <div class="user-name" id="userName">Guest</div>
+                    <div class="user-email" id="userEmail">Not signed in</div>
+                </div>
+                <button id="openAuthModal" data-i18n="sign_in">Sign In / Sign Up</button>
+                <button id="signOutBtn" class="danger" data-i18n="sign_out" style="display:none;">Sign Out</button>
+            </div>
             <button class="settings-btn" id="settingsBtn" aria-label="Settings">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="3"/>
@@ -510,6 +668,43 @@
                 </a>
             </div>
         </header>
+
+        <!-- Auth Modal -->
+        <div class="auth-modal" id="authModal">
+            <div class="auth-modal-content">
+                <button class="auth-close" id="closeAuthModal">&times;</button>
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login" data-i18n="sign_in">Sign In</button>
+                    <button class="auth-tab" data-tab="signup" data-i18n="sign_up">Sign Up</button>
+                </div>
+                <form class="auth-form active" id="loginForm">
+                    <div class="form-group">
+                        <label data-i18n="email">Email</label>
+                        <input type="email" id="loginEmail" required placeholder="you@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="password">Password</label>
+                        <input type="password" id="loginPassword" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="auth-submit" data-i18n="sign_in">Sign In</button>
+                </form>
+                <form class="auth-form" id="signupForm">
+                    <div class="form-group">
+                        <label data-i18n="display_name">Display Name</label>
+                        <input type="text" id="signupName" required placeholder="Your Name" maxlength="30">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="email">Email</label>
+                        <input type="email" id="signupEmail" required placeholder="you@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="password">Password</label>
+                        <input type="password" id="signupPassword" required minlength="6" placeholder="Min 6 characters">
+                    </div>
+                    <button type="submit" class="auth-submit" data-i18n="sign_up">Create Account</button>
+                </form>
+            </div>
+        </div>
 
         <div id="statusIndicator" class="status-indicator status-disconnected" style="display:none;">
             <span class="status-dot disconnected"></span>
@@ -565,7 +760,8 @@
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-        import { getDatabase, ref, push, onValue, off, query, orderByChild, limitToLast } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+        import { getDatabase, ref, push, onValue, off, query, orderByChild, limitToLast, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+        import { getAuth, signInAnonymously, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyBtTYMupsu0w6yAYPANKxsaxvLBBVDOqdU",
@@ -579,6 +775,7 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+        const auth = getAuth(app);
         const feedbacksRef = ref(db, 'feedbacks');
 
         // Translations
@@ -604,7 +801,19 @@
                 fill_fields: "Please fill all fields and select a rating!",
                 fill_name_or_anon: "Please enter your name or check \"Post as Anonymous\"",
                 success: "Feedback submitted successfully!",
-                error_submit: "Failed to submit. Check connection."
+                error_submit: "Failed to submit. Check connection.",
+                sign_in: "Sign In",
+                sign_up: "Sign Up",
+                sign_out: "Sign Out",
+                email: "Email",
+                password: "Password",
+                display_name: "Display Name",
+                comments: "Comments",
+                write_comment: "Write a comment...",
+                post_comment: "Post",
+                login_to_comment: "Login to comment",
+                no_comments: "No comments yet",
+                anonymous_user: "Anonymous"
             },
             es: {
                 subtitle: "Comentarios para ROMs personalizadas Redmi Note 8",
@@ -627,7 +836,19 @@
                 fill_fields: "¡Completa todos los campos y selecciona una valoración!",
                 fill_name_or_anon: "Ingresa tu nombre o marca \"Publicar como Anónimo\"",
                 success: "¡Comentario enviado con éxito!",
-                error_submit: "Error al enviar. Verifica la conexión."
+                error_submit: "Error al enviar. Verifica la conexión.",
+                sign_in: "Iniciar Sesión",
+                sign_up: "Registrarse",
+                sign_out: "Cerrar Sesión",
+                email: "Correo",
+                password: "Contraseña",
+                display_name: "Nombre",
+                comments: "Comentarios",
+                write_comment: "Escribe un comentario...",
+                post_comment: "Publicar",
+                login_to_comment: "Inicia sesión para comentar",
+                no_comments: "Sin comentarios aún",
+                anonymous_user: "Anónimo"
             },
             ru: {
                 subtitle: "Отзывы для кастомных прошивок Redmi Note 8",
@@ -650,7 +871,19 @@
                 fill_fields: "Заполните все поля и выберите оценку!",
                 fill_name_or_anon: "Введите имя или отметьте \"Отправить анонимно\"",
                 success: "Отзыв успешно отправлен!",
-                error_submit: "Не удалось отправить. Проверьте соединение."
+                error_submit: "Не удалось отправить. Проверьте соединение.",
+                sign_in: "Войти",
+                sign_up: "Регистрация",
+                sign_out: "Выйти",
+                email: "Email",
+                password: "Пароль",
+                display_name: "Имя",
+                comments: "Комментарии",
+                write_comment: "Написать комментарий...",
+                post_comment: "Отправить",
+                login_to_comment: "Войдите, чтобы комментировать",
+                no_comments: "Комментариев пока нет",
+                anonymous_user: "Аноним"
             },
             it: {
                 subtitle: "Feedback per Custom ROM Redmi Note 8",
@@ -673,7 +906,19 @@
                 fill_fields: "Compila tutti i campi e seleziona una valutazione!",
                 fill_name_or_anon: "Inserisci il nome o spunta \"Pubblica come Anonimo\"",
                 success: "Feedback inviato con successo!",
-                error_submit: "Invio fallito. Controlla la connessione."
+                error_submit: "Invio fallito. Controlla la connessione.",
+                sign_in: "Accedi",
+                sign_up: "Registrati",
+                sign_out: "Esci",
+                email: "Email",
+                password: "Password",
+                display_name: "Nome",
+                comments: "Commenti",
+                write_comment: "Scrivi un commento...",
+                post_comment: "Inserisci",
+                login_to_comment: "Accedi per commentare",
+                no_comments: "Nessun commento",
+                anonymous_user: "Anonimo"
             }
         };
 
@@ -683,6 +928,8 @@
         let currentRating = 0;
         let allFeedbacks = [];
         let unsubscribe = null;
+        let currentUser = null;
+        let commentsUnsubscribes = {};
 
         const settingsBtn = document.getElementById('settingsBtn');
         const settingsDropdown = document.getElementById('settingsDropdown');
@@ -697,6 +944,18 @@
         const statusDot = statusIndicator.querySelector('.status-dot');
         const anonymousCheck = document.getElementById('anonymousCheck');
         const authorInput = document.getElementById('author');
+        const userMenuBtn = document.getElementById('userMenuBtn');
+        const userDropdown = document.getElementById('userDropdown');
+        const userInfo = document.getElementById('userInfo');
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+        const openAuthModalBtn = document.getElementById('openAuthModal');
+        const signOutBtn = document.getElementById('signOutBtn');
+        const authModal = document.getElementById('authModal');
+        const closeAuthModalBtn = document.getElementById('closeAuthModal');
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
 
         // Settings dropdown toggle
         settingsBtn.addEventListener('click', (e) => {
@@ -705,8 +964,102 @@
         });
         document.addEventListener('click', () => {
             settingsDropdown.classList.remove('open');
+            userDropdown.classList.remove('open');
         });
         settingsDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        // User dropdown toggle
+        userMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('open');
+        });
+        userDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        // Auth modal
+        openAuthModalBtn.addEventListener('click', () => {
+            authModal.classList.add('open');
+            userDropdown.classList.remove('open');
+        });
+        closeAuthModalBtn.addEventListener('click', () => {
+            authModal.classList.remove('open');
+        });
+        authModal.addEventListener('click', (e) => {
+            if (e.target === authModal) authModal.classList.remove('open');
+        });
+
+        // Auth tabs
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                authTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const target = tab.dataset.tab;
+                loginForm.classList.toggle('active', target === 'login');
+                signupForm.classList.toggle('active', target === 'signup');
+            });
+        });
+
+        // Login form
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const t = translations[currentLang];
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                authModal.classList.remove('open');
+                loginForm.reset();
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        // Signup form
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const t = translations[currentLang];
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, email, password);
+                await updateProfile(cred.user, { displayName: name });
+                authModal.classList.remove('open');
+                signupForm.reset();
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        // Sign out
+        signOutBtn.addEventListener('click', async () => {
+            await signOut(auth);
+        });
+
+        // Auth state observer
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            updateUserUI(user);
+        });
+
+        function updateUserUI(user) {
+            const t = translations[currentLang];
+            if (user) {
+                userMenuBtn.classList.add('has-user');
+                userName.textContent = user.displayName || user.email?.split('@')[0] || 'User';
+                userEmail.textContent = user.isAnonymous ? t.anonymous_user : user.email;
+                userEmail.classList.toggle('user-anon', user.isAnonymous);
+                openAuthModalBtn.style.display = 'none';
+                signOutBtn.style.display = 'block';
+            } else {
+                userMenuBtn.classList.remove('has-user');
+                userName.textContent = 'Guest';
+                userEmail.textContent = t.not_signed_in || 'Not signed in';
+                userEmail.classList.remove('user-anon');
+                openAuthModalBtn.style.display = 'block';
+                signOutBtn.style.display = 'none';
+            }
+            renderFeedbacks();
+        }
 
         // Theme switcher
         themeBtns.forEach(btn => {
@@ -743,10 +1096,10 @@
                 }
             });
             document.documentElement.lang = lang;
-            // Update dynamic texts
             if (statusIndicator.style.display !== 'none') {
                 statusText.textContent = statusDot.classList.contains('connected') ? t.connected : t.connecting;
             }
+            updateUserUI(currentUser);
             renderFeedbacks();
         }
 
@@ -777,7 +1130,7 @@
             }
 
             feedbackContainer.innerHTML = sorted.map(fb => `
-                <div class="feedback-item">
+                <div class="feedback-item" data-feedback-id="${fb.id}">
                     <div class="feedback-header">
                         <span class="feedback-rom">${fb.rom}</span>
                         <span class="feedback-date">${new Date(fb.date).toLocaleString(currentLang === 'ru' ? 'ru-RU' : currentLang === 'es' ? 'es-ES' : currentLang === 'it' ? 'it-IT' : 'en-US')}</span>
@@ -785,8 +1138,121 @@
                     <div class="feedback-author">${fb.author}</div>
                     <div class="feedback-rating">${'★'.repeat(fb.rating)}${'☆'.repeat(5 - fb.rating)}</div>
                     <div class="feedback-text">${fb.text}</div>
+                    <div class="comments-section" id="comments-${fb.id}">
+                        <div class="comments-header">
+                            <span data-i18n="comments">${t.comments}</span>
+                            <button class="comments-toggle" data-feedback-id="${fb.id}" data-i18n="show_comments">${t.show_comments || 'Show comments'}</button>
+                        </div>
+                        <div class="comments-list" id="comments-list-${fb.id}" style="display:none;"></div>
+                        <div class="comment-area" id="comment-area-${fb.id}" style="display:none;">
+                            ${currentUser ? `
+                                <form class="comment-form" data-feedback-id="${fb.id}">
+                                    <textarea placeholder="${t.write_comment}" maxlength="500" required></textarea>
+                                    <button type="submit" class="comment-submit" data-i18n="post_comment">${t.post_comment}</button>
+                                </form>
+                            ` : `
+                                <div class="login-prompt">
+                                    <span data-i18n="login_to_comment">${t.login_to_comment}</span>
+                                    <button type="button" class="open-auth-from-comment" data-i18n="sign_in">${t.sign_in}</button>
+                                </div>
+                            `}
+                        </div>
+                    </div>
                 </div>
             `).join('');
+
+            // Attach comment event listeners
+            attachCommentListeners();
+        }
+
+        function attachCommentListeners() {
+            const t = translations[currentLang];
+            
+            // Toggle comments
+            document.querySelectorAll('.comments-toggle').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const feedbackId = e.target.dataset.feedbackId;
+                    const list = document.getElementById(`comments-list-${feedbackId}`);
+                    const area = document.getElementById(`comment-area-${feedbackId}`);
+                    const isHidden = list.style.display === 'none';
+                    list.style.display = isHidden ? 'block' : 'none';
+                    area.style.display = isHidden ? 'block' : 'none';
+                    e.target.textContent = isHidden ? (t.hide_comments || 'Hide comments') : t.show_comments;
+                    if (isHidden) loadComments(feedbackId);
+                });
+            });
+
+            // Comment forms
+            document.querySelectorAll('.comment-form').forEach(form => {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const feedbackId = form.dataset.feedbackId;
+                    const textarea = form.querySelector('textarea');
+                    const text = textarea.value.trim();
+                    if (!text || !currentUser) return;
+
+                    const submitBtn = form.querySelector('.comment-submit');
+                    submitBtn.disabled = true;
+                    
+                    try {
+                        const commentsRef = ref(db, `feedbacks/${feedbackId}/comments`);
+                        await push(commentsRef, {
+                            author: currentUser.displayName || currentUser.email?.split('@')[0] || 'User',
+                            authorId: currentUser.uid,
+                            text,
+                            date: serverTimestamp()
+                        });
+                        textarea.value = '';
+                    } catch (error) {
+                        console.error('Comment error:', error);
+                        alert(t.error_submit);
+                    } finally {
+                        submitBtn.disabled = false;
+                    }
+                });
+            });
+
+            // Open auth from comment prompt
+            document.querySelectorAll('.open-auth-from-comment').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    authModal.classList.add('open');
+                });
+            });
+        }
+
+        function loadComments(feedbackId) {
+            if (commentsUnsubscribes[feedbackId]) {
+                off(ref(db, `feedbacks/${feedbackId}/comments`), 'value', commentsUnsubscribes[feedbackId]);
+            }
+            
+            const commentsRef = ref(db, `feedbacks/${feedbackId}/comments`);
+            const q = query(commentsRef, orderByChild('date'), limitToLast(50));
+            
+            const t = translations[currentLang];
+            const listEl = document.getElementById(`comments-list-${feedbackId}`);
+            
+            commentsUnsubscribes[feedbackId] = onValue(q, (snapshot) => {
+                listEl.innerHTML = '';
+                const data = snapshot.val();
+                if (!data) {
+                    listEl.innerHTML = `<div class="empty-state" style="padding:16px;font-size:0.85rem;">${t.no_comments}</div>`;
+                    return;
+                }
+                
+                const comments = Object.entries(data)
+                    .map(([key, value]) => ({ id: key, ...value }))
+                    .sort((a, b) => new Date(a.date) - new Date(b.date));
+                
+                listEl.innerHTML = comments.map(c => `
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <span class="comment-author">${c.author}</span>
+                            <span class="comment-date">${c.date ? new Date(c.date).toLocaleString(currentLang === 'ru' ? 'ru-RU' : currentLang === 'es' ? 'es-ES' : currentLang === 'it' ? 'it-IT' : 'en-US') : ''}</span>
+                        </div>
+                        <div class="comment-text">${c.text}</div>
+                    </div>
+                `).join('');
+            });
         }
 
         function listenFeedbacks() {
@@ -854,7 +1320,7 @@
                 authorInput.value = '';
             } else {
                 authorInput.disabled = false;
-                authorInput.placeholder = translations[currentLang].your_name.includes('Nickname') ? 'Ex: Rafael, User123...' : 'Ex: Rafael, User123...';
+                authorInput.placeholder = 'Ex: Rafael, User123...';
             }
         });
 
