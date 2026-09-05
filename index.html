@@ -597,6 +597,30 @@
         .comment-submit:disabled { opacity: 0.5; cursor: not-allowed; }
         .login-prompt { text-align: center; padding: 16px; color: var(--text-secondary); font-size: 0.85rem; }
         .login-prompt button { background: none; border: none; color: var(--accent-primary); font-weight: 600; cursor: pointer; text-decoration: underline; }
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        .auth-divider::before, .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+        .guest-btn {
+            background: var(--bg-tertiary) !important;
+            color: var(--text-primary) !important;
+            border: 1px solid var(--border-color) !important;
+        }
+        .guest-btn:hover {
+            background: var(--accent-primary) !important;
+            color: var(--bg-primary) !important;
+            border-color: var(--accent-primary) !important;
+        }
 
     </style>
 </head>
@@ -688,6 +712,10 @@
                     </div>
                     <button type="submit" class="auth-submit" data-i18n="sign_in">Sign In</button>
                 </form>
+                <div class="auth-divider">
+                    <span data-i18n="or_continue">Or continue as</span>
+                </div>
+                <button type="button" class="auth-submit guest-btn" id="guestSignIn" data-i18n="continue_guest">Continue as Guest</button>
                 <form class="auth-form" id="signupForm">
                     <div class="form-group">
                         <label data-i18n="display_name">Display Name</label>
@@ -816,7 +844,9 @@
                 anonymous_user: "Anonymous",
                 show_comments: "Show comments",
                 hide_comments: "Hide comments",
-                not_signed_in: "Not signed in"
+                not_signed_in: "Not signed in",
+                or_continue: "Or continue as",
+                continue_guest: "Continue as Guest"
             },
             es: {
                 subtitle: "Comentarios para ROMs personalizadas Redmi Note 8",
@@ -854,7 +884,9 @@
                 anonymous_user: "Anónimo",
                 show_comments: "Mostrar comentarios",
                 hide_comments: "Ocultar comentarios",
-                not_signed_in: "No has iniciado sesión"
+                not_signed_in: "No has iniciado sesión",
+                or_continue: "O continúa como",
+                continue_guest: "Continuar como Invitado"
             },
             ru: {
                 subtitle: "Отзывы для кастомных прошивок Redmi Note 8",
@@ -892,7 +924,9 @@
                 anonymous_user: "Аноним",
                 show_comments: "Показать комментарии",
                 hide_comments: "Скрыть комментарии",
-                not_signed_in: "Не вошли в систему"
+                not_signed_in: "Не вошли в систему",
+                or_continue: "Или продолжить как",
+                continue_guest: "Продолжить как Гость"
             },
             it: {
                 subtitle: "Feedback per Custom ROM Redmi Note 8",
@@ -930,7 +964,9 @@
                 anonymous_user: "Anonimo",
                 show_comments: "Mostra commenti",
                 hide_comments: "Nascondi commenti",
-                not_signed_in: "Non hai effettuato l'accesso"
+                not_signed_in: "Non hai effettuato l'accesso",
+                or_continue: "O continua come",
+                continue_guest: "Continua come Ospite"
             }
         };
 
@@ -1037,6 +1073,16 @@
                 await updateProfile(cred.user, { displayName: name });
                 authModal.classList.remove('open');
                 signupForm.reset();
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        // Guest sign in
+        document.getElementById('guestSignIn').addEventListener('click', async () => {
+            try {
+                await signInAnonymously(auth);
+                authModal.classList.remove('open');
             } catch (error) {
                 alert(error.message);
             }
