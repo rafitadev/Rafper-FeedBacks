@@ -1,0 +1,74 @@
+=================================================================
+FIREBASE CONFIG - COLE NO FIREBASE CONSOLE
+=================================================================
+
+PROJETO: rafper-feedbacks
+PROJECT ID: rafper-feedbacks
+DATABASE URL: https://rafper-feedbacks-default-rtdb.firebaseio.com
+
+=================================================================
+1. AUTENTICAÇÃO (Authentication → Sign-in method)
+=================================================================
+ATIVE ESTES 2 PROVEDORES:
+
+☐ Email/Password
+   → Clique em "Email/Password"
+   → Toggle "Ativar" = ON
+   → Salvar
+
+☐ Anonymous (Anônimo)
+   → Clique em "Anonymous"
+   → Toggle "Ativar" = ON
+   → Salvar
+
+=================================================================
+2. REALTIME DATABASE (Realtime Database → Regras)
+=================================================================
+COLE EXATAMENTE ISTO (substitua tudo):
+
+{
+  "rules": {
+    "feedbacks": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": "date",
+      "comments": {
+        ".read": true,
+        ".write": "auth != null",
+        ".indexOn": "date"
+      }
+    }
+  }
+}
+
+→ Clique "Publicar"
+
+=================================================================
+3. CONFIGURAÇÃO DO SITE (já está no index.html)
+=================================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBtTYMupsu0w6yAYPANKxsaxvLBBVDOqdU",
+  authDomain: "rafper-feedbacks.firebaseapp.com",
+  databaseURL: "https://rafper-feedbacks-default-rtdb.firebaseio.com",
+  projectId: "rafper-feedbacks",
+  storageBucket: "rafper-feedbacks.firebasestorage.app",
+  messagingSenderId: "254959542657",
+  appId: "1:254959542657:web:553e0e3b8ba9843d794880"
+};
+
+=================================================================
+CHECKLIST RÁPIDO
+=================================================================
+[ ] Authentication → Email/Password = ON
+[ ] Authentication → Anonymous = ON  
+[ ] Realtime Database → Regras = colado acima
+[ ] Realtime Database → Publicar = clicado
+[ ] Aguardar 30 segundos
+[ ] Testar em: https://rafitadev.github.io/Rafper-FeedBacks/
+
+=================================================================
+LINKS DIRETOS
+=================================================================
+Authentication: https://console.firebase.google.com/project/rafper-feedbacks/authentication/providers
+Database Rules: https://console.firebase.google.com/project/rafper-feedbacks/database/rafper-feedbacks-default-rtdb/rules
+Project Overview: https://console.firebase.google.com/project/rafper-feedbacks/overview

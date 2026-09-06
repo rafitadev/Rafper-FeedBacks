@@ -258,6 +258,22 @@
             background: linear-gradient(135deg, var(--success-hover), var(--success));
             box-shadow: 0 2px 8px rgba(76, 175, 80, 0.6);
         }
+        .galaxy-badge {
+            background: linear-gradient(135deg, #7b2ff7, #5a1fd0) !important;
+            box-shadow: 0 2px 6px rgba(123, 47, 247, 0.4) !important;
+        }
+        .rom-btn.active .galaxy-badge,
+        .rom-btn:hover .galaxy-badge {
+            background: linear-gradient(135deg, #5a1fd0, #7b2ff7) !important;
+            box-shadow: 0 2px 8px rgba(123, 47, 247, 0.6) !important;
+        }
+        .rom-divider {
+            width: 1px;
+            height: 28px;
+            background: var(--border-color);
+            margin: 0 8px;
+            align-self: center;
+        }
 
         .feedback-form {
             background: var(--bg-card);
@@ -745,6 +761,8 @@
             <button class="rom-btn" data-rom="HyperOS 2.0.6.0">HyperOS 2.0.6.0<span class="android-badge">14</span></button>
             <button class="rom-btn" data-rom="HyperOS 2.0.8.0">HyperOS 2.0.8.0<span class="android-badge">14</span></button>
             <button class="rom-btn" data-rom="HyperOS 2.0.224">HyperOS 2.0.224<span class="android-badge">15</span></button>
+            <span class="rom-divider"></span>
+            <button class="rom-btn" data-rom="Pitch Black Recovery">Pitch Black Recovery<span class="android-badge galaxy-badge">S7</span></button>
         </div>
 
         <div class="feedback-form">
