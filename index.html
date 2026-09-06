@@ -91,13 +91,24 @@
             margin-top: 10px;
         }
         .device-badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
             background: rgba(255, 107, 107, 0.2);
             color: var(--accent-warm);
             padding: 5px 15px;
             border-radius: 15px;
             font-size: 0.85rem;
             margin-bottom: 15px;
+        }
+        .device-label {
+            color: var(--success);
+            font-weight: 600;
+        }
+        .recovery-label {
+            color: #7b2ff7;
+            font-weight: 600;
         }
         .telegram-links {
             display: flex;
@@ -696,7 +707,10 @@
             </div>
             <h1>Rafper Feedbacks</h1>
             <p data-i18n="subtitle">Feedback for Redmi Note 8 Custom ROMs</p>
-            <span class="device-badge">Device: Redmi Note 8 / 8T (Ginkgo/Willow)</span>
+            <span class="device-badge">
+                <span class="device-label">Devices:</span> Redmi Note 8 / 8T (Ginkgo/Willow)
+                <span class="recovery-label">| Recovery:</span> S7/S7e/N7/NFE
+            </span>
             <div class="telegram-links">
                 <a href="https://t.me/RafperTest" target="_blank" class="telegram-btn">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.42 15.58l-3.75.74-1.53-3.37L9 15.27l-2.67-1.75 3.33-.42L12 9.09l1.74 3.65 3.33.42-2.67 1.75 1.11 3.24-3.76-.74z"/></svg>
