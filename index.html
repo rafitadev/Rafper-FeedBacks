@@ -62,12 +62,71 @@
             --bg-card: #1a1a1a;
             --border-color: #333333;
         }
+        [data-theme="ios-dark"] {
+            --bg-primary: #000000;
+            --bg-secondary: #1c1c1e;
+            --bg-tertiary: #2c2c2e;
+            --bg-card: #1c1c1e;
+            --border-color: rgba(84, 84, 88, 0.6);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(235, 235, 245, 0.6);
+            --accent-primary: #0a84ff;
+            --accent-secondary: rgba(10, 132, 255, 0.16);
+            --accent-warm: #ff453a;
+            --star-empty: #3a3a3c;
+            --star-filled: #ffd60a;
+            --success: #30d158;
+            --success-hover: #28c840;
+            --telegram: #0a84ff;
+            --telegram-hover: #007aff;
+            --fill: rgba(120, 120, 128, 0.24);
+            --fill-2: rgba(120, 120, 128, 0.36);
+            --card-2: #2c2c2e;
+            --card-3: #3a3a3c;
+            --line: rgba(84, 84, 88, 0.6);
+            --fg: #fff;
+            --fg-2: rgba(235, 235, 245, 0.6);
+            --fg-3: rgba(235, 235, 245, 0.3);
+        }
+[data-theme="ios-liquid-glass"] {
+            --bg-primary: radial-gradient(ellipse at 50% 0%, rgba(30, 30, 35, 0.9) 0%, #000000 70%);
+            --bg-secondary: rgba(28, 28, 30, 0.7);
+            --bg-tertiary: rgba(44, 44, 46, 0.5);
+            --bg-card: rgba(28, 28, 30, 0.6);
+            --border-color: rgba(255, 255, 255, 0.12);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(235, 235, 245, 0.7);
+            --accent-primary: #0a84ff;
+            --accent-secondary: rgba(10, 132, 255, 0.2);
+            --accent-warm: #ff453a;
+            --star-empty: rgba(255, 255, 255, 0.2);
+            --star-filled: #ffd60a;
+            --success: #30d158;
+            --success-hover: #28c840;
+            --telegram: #0a84ff;
+            --telegram-hover: #007aff;
+            --fill: rgba(255, 255, 255, 0.08);
+            --fill-2: rgba(255, 255, 255, 0.12);
+            --card-2: rgba(44, 44, 46, 0.8);
+            --card-3: rgba(58, 58, 60, 0.6);
+            --line: rgba(255, 255, 255, 0.1);
+            --fg: #fff;
+            --fg-2: rgba(235, 235, 245, 0.7);
+            --fg-3: rgba(235, 235, 245, 0.4);
+            --glass-blur: blur(20px);
+            --glass-bg: rgba(28, 28, 30, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+        }
+        [data-theme="ios-dark"] {
+            --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: var(--font-sans);
             background: var(--bg-primary);
             min-height: 100vh;
             color: var(--text-primary);
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: background 0.3s ease, color 0.3s ease, font-family 0.3s ease;
         }
         .container {
             max-width: 800px;
@@ -649,6 +708,137 @@
             border-color: var(--accent-primary) !important;
         }
 
+        /* iOS Dark theme refinements */
+        [data-theme="ios-dark"] .container,
+        [data-theme="ios-liquid-glass"] .container {
+            max-width: 640px;
+            padding: 16px;
+        }
+        [data-theme="ios-dark"] header,
+        [data-theme="ios-liquid-glass"] header {
+            padding: 12px 0 8px;
+        }
+        [data-theme="ios-dark"] .feedback-form,
+        [data-theme="ios-liquid-glass"] .feedback-form,
+        [data-theme="ios-dark"] .feedbacks-list,
+        [data-theme="ios-liquid-glass"] .feedbacks-list,
+        [data-theme="ios-dark"] .settings-dropdown,
+        [data-theme="ios-liquid-glass"] .settings-dropdown,
+        [data-theme="ios-dark"] .auth-modal-content,
+        [data-theme="ios-liquid-glass"] .auth-modal-content,
+        [data-theme="ios-dark"] .user-dropdown,
+        [data-theme="ios-liquid-glass"] .user-dropdown {
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+        }
+        [data-theme="ios-dark"] .rom-btn,
+        [data-theme="ios-liquid-glass"] .rom-btn {
+            border-radius: 999px;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        [data-theme="ios-dark"] .btn-submit,
+        [data-theme="ios-liquid-glass"] .btn-submit,
+        [data-theme="ios-dark"] .auth-submit,
+        [data-theme="ios-liquid-glass"] .auth-submit {
+            border-radius: 14px;
+            min-height: 50px;
+            font-size: 17px;
+            font-weight: 600;
+        }
+        [data-theme="ios-dark"] .rating label,
+        [data-theme="ios-liquid-glass"] .rating label {
+            font-size: 28px;
+        }
+        [data-theme="ios-dark"] input,
+        [data-theme="ios-liquid-glass"] input,
+        [data-theme="ios-dark"] textarea,
+        [data-theme="ios-liquid-glass"] textarea {
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 17px;
+        }
+
+        /* Liquid Glass specific */
+        [data-theme="ios-liquid-glass"] {
+            background-attachment: fixed;
+        }
+        [data-theme="ios-liquid-glass"] .container {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+                0 1px 0 rgba(255, 255, 255, 0.1) inset;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        [data-theme="ios-liquid-glass"] header {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border-radius: 18px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 16px;
+        }
+        [data-theme="ios-liquid-glass"] .feedback-form,
+        [data-theme="ios-liquid-glass"] .feedbacks-list,
+        [data-theme="ios-liquid-glass"] .settings-dropdown,
+        [data-theme="ios-liquid-glass"] .auth-modal-content,
+        [data-theme="ios-liquid-glass"] .user-dropdown {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+        }
+        [data-theme="ios-liquid-glass"] .rom-btn {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+        }
+        [data-theme="ios-liquid-glass"] .rom-btn:hover,
+        [data-theme="ios-liquid-glass"] .rom-btn.active {
+            background: var(--accent-primary);
+            color: #fff;
+        }
+        [data-theme="ios-liquid-glass"] .feedback-item {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+        }
+        [data-theme="ios-liquid-glass"] .site-footer {
+            border-top: 1px solid var(--glass-border);
+        }
+        [data-theme="ios-liquid-glass"] .status-indicator {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+        }
+        [data-theme="ios-liquid-glass"] .auth-modal {
+            background: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        [data-theme="ios-liquid-glass"] .feedback-text {
+            color: var(--fg);
+        }
+        [data-theme="ios-liquid-glass"] .comment-item {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+        }
+
     </style>
 </head>
 <body>
@@ -692,6 +882,12 @@
                         </button>
                         <button class="theme-btn" data-theme="green" title="Green">
                             <span>Green</span>
+                        </button>
+                        <button class="theme-btn" data-theme="ios-dark" title="iOS Dark (Alpha Style)">
+                            <span>iOS Dark</span>
+                        </button>
+                        <button class="theme-btn" data-theme="ios-liquid-glass" title="iOS 26 Liquid Glass">
+                            <span>Liquid Glass</span>
                         </button>
                     </div>
                 </div>
