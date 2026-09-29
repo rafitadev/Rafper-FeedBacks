@@ -55,14 +55,14 @@
             --success: #00ff88;
             --success-hover: #00cc6a;
         }
-        [data-theme="gray"] {
+[data-theme="gray"] {
             --bg-primary: #111111;
             --bg-secondary: #1a1a1a;
             --bg-tertiary: #242424;
             --bg-card: #1a1a1a;
             --border-color: #333333;
         }
-        [data-theme="ios-dark"] {
+        [data-theme="alpha-style"] {
             --bg-primary: #000000;
             --bg-secondary: #1c1c1e;
             --bg-tertiary: #2c2c2e;
@@ -87,19 +87,32 @@
             --fg: #fff;
             --fg-2: rgba(235, 235, 245, 0.6);
             --fg-3: rgba(235, 235, 245, 0.3);
+            --r-card: 14px;
+            --r-md: 12px;
+            --r-sm: 10px;
+            --r-pill: 999px;
+            --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+            --page: 640px;
+            --gutter: 16px;
+            --header-h: 50px;
+            --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+            --spring-snappy: cubic-bezier(0.3, 1.1, 0.4, 1);
+            --spring-bouncy: cubic-bezier(0.3, 1.3, 0.5, 1);
+            --t-snappy: 0.6s;
+            --t-bouncy: 0.72s;
         }
-[data-theme="ios-liquid-glass"] {
-            --bg-primary: radial-gradient(ellipse at 50% 0%, rgba(30, 30, 35, 0.9) 0%, #000000 70%);
-            --bg-secondary: rgba(28, 28, 30, 0.7);
-            --bg-tertiary: rgba(44, 44, 46, 0.5);
-            --bg-card: rgba(28, 28, 30, 0.6);
+        [data-theme="alpha-glass"] {
+            --bg-primary: radial-gradient(ellipse at 50% 0%, rgba(20, 20, 25, 0.95) 0%, #000000 70%);
+            --bg-secondary: rgba(28, 28, 30, 0.85);
+            --bg-tertiary: rgba(44, 44, 46, 0.7);
+            --bg-card: rgba(28, 28, 30, 0.75);
             --border-color: rgba(255, 255, 255, 0.12);
             --text-primary: #ffffff;
             --text-secondary: rgba(235, 235, 245, 0.7);
             --accent-primary: #0a84ff;
-            --accent-secondary: rgba(10, 132, 255, 0.2);
+            --accent-secondary: rgba(10, 132, 255, 0.18);
             --accent-warm: #ff453a;
-            --star-empty: rgba(255, 255, 255, 0.2);
+            --star-empty: rgba(255, 255, 255, 0.25);
             --star-filled: #ffd60a;
             --success: #30d158;
             --success-hover: #28c840;
@@ -107,19 +120,28 @@
             --telegram-hover: #007aff;
             --fill: rgba(255, 255, 255, 0.08);
             --fill-2: rgba(255, 255, 255, 0.12);
-            --card-2: rgba(44, 44, 46, 0.8);
-            --card-3: rgba(58, 58, 60, 0.6);
+            --card-2: rgba(44, 44, 46, 0.85);
+            --card-3: rgba(58, 58, 60, 0.7);
             --line: rgba(255, 255, 255, 0.1);
             --fg: #fff;
             --fg-2: rgba(235, 235, 245, 0.7);
             --fg-3: rgba(235, 235, 245, 0.4);
+            --r-card: 14px;
+            --r-md: 12px;
+            --r-sm: 10px;
+            --r-pill: 999px;
+            --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+            --page: 640px;
+            --gutter: 16px;
+            --header-h: 50px;
             --glass-blur: blur(20px);
-            --glass-bg: rgba(28, 28, 30, 0.5);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
-        }
-        [data-theme="ios-dark"] {
-            --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+            --glass-bg: rgba(28, 28, 30, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+            --spring-snappy: cubic-bezier(0.3, 1.1, 0.4, 1);
+            --spring-bouncy: cubic-bezier(0.3, 1.3, 0.5, 1);
+            --t-snappy: 0.6s;
+            --t-bouncy: 0.72s;
         }
         body {
             font-family: var(--font-sans);
@@ -708,63 +730,97 @@
             border-color: var(--accent-primary) !important;
         }
 
-        /* iOS Dark theme refinements */
-        [data-theme="ios-dark"] .container,
-        [data-theme="ios-liquid-glass"] .container {
+/* Alpha Style theme refinements (alphas-trashdump) */
+        [data-theme="alpha-style"] .container,
+        [data-theme="alpha-glass"] .container {
             max-width: 640px;
             padding: 16px;
         }
-        [data-theme="ios-dark"] header,
-        [data-theme="ios-liquid-glass"] header {
+        [data-theme="alpha-style"] header,
+        [data-theme="alpha-glass"] header {
             padding: 12px 0 8px;
         }
-        [data-theme="ios-dark"] .feedback-form,
-        [data-theme="ios-liquid-glass"] .feedback-form,
-        [data-theme="ios-dark"] .feedbacks-list,
-        [data-theme="ios-liquid-glass"] .feedbacks-list,
-        [data-theme="ios-dark"] .settings-dropdown,
-        [data-theme="ios-liquid-glass"] .settings-dropdown,
-        [data-theme="ios-dark"] .auth-modal-content,
-        [data-theme="ios-liquid-glass"] .auth-modal-content,
-        [data-theme="ios-dark"] .user-dropdown,
-        [data-theme="ios-liquid-glass"] .user-dropdown {
-            border-radius: 14px;
+        [data-theme="alpha-style"] .feedback-form,
+        [data-theme="alpha-glass"] .feedback-form,
+        [data-theme="alpha-style"] .feedbacks-list,
+        [data-theme="alpha-glass"] .feedbacks-list,
+        [data-theme="alpha-style"] .settings-dropdown,
+        [data-theme="alpha-glass"] .settings-dropdown,
+        [data-theme="alpha-style"] .auth-modal-content,
+        [data-theme="alpha-glass"] .auth-modal-content,
+        [data-theme="alpha-style"] .user-dropdown,
+        [data-theme="alpha-glass"] .user-dropdown {
+            border-radius: var(--r-card);
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
         }
-        [data-theme="ios-dark"] .rom-btn,
-        [data-theme="ios-liquid-glass"] .rom-btn {
-            border-radius: 999px;
+        [data-theme="alpha-style"] .rom-btn,
+        [data-theme="alpha-glass"] .rom-btn {
+            border-radius: var(--r-pill);
             padding: 10px 20px;
             font-size: 15px;
             font-weight: 500;
         }
-        [data-theme="ios-dark"] .btn-submit,
-        [data-theme="ios-liquid-glass"] .btn-submit,
-        [data-theme="ios-dark"] .auth-submit,
-        [data-theme="ios-liquid-glass"] .auth-submit {
-            border-radius: 14px;
+        [data-theme="alpha-style"] .btn-submit,
+        [data-theme="alpha-glass"] .btn-submit,
+        [data-theme="alpha-style"] .auth-submit,
+        [data-theme="alpha-glass"] .auth-submit {
+            border-radius: var(--r-md);
             min-height: 50px;
             font-size: 17px;
             font-weight: 600;
         }
-        [data-theme="ios-dark"] .rating label,
-        [data-theme="ios-liquid-glass"] .rating label {
+        [data-theme="alpha-style"] .rating label,
+        [data-theme="alpha-glass"] .rating label {
             font-size: 28px;
         }
-        [data-theme="ios-dark"] input,
-        [data-theme="ios-liquid-glass"] input,
-        [data-theme="ios-dark"] textarea,
-        [data-theme="ios-liquid-glass"] textarea {
-            border-radius: 10px;
+        [data-theme="alpha-style"] input,
+        [data-theme="alpha-glass"] input,
+        [data-theme="alpha-style"] textarea,
+        [data-theme="alpha-glass"] textarea {
+            border-radius: var(--r-sm);
             padding: 12px 14px;
             font-size: 17px;
         }
+        [data-theme="alpha-style"] .android-badge,
+        [data-theme="alpha-glass"] .android-badge {
+            border-radius: 6px;
+            padding: 1px 6px;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+        [data-theme="alpha-style"] .device-badge,
+        [data-theme="alpha-glass"] .device-badge {
+            border-radius: var(--r-pill);
+            padding: 5px 14px;
+            font-size: 13px;
+        }
+        [data-theme="alpha-style"] .feedback-item,
+        [data-theme="alpha-glass"] .feedback-item {
+            border-radius: var(--r-card);
+        }
+        [data-theme="alpha-style"] .comment-item,
+        [data-theme="alpha-glass"] .comment-item {
+            border-radius: var(--r-md);
+        }
+        [data-theme="alpha-style"] .auth-modal-content,
+        [data-theme="alpha-glass"] .auth-modal-content {
+            border-radius: var(--r-card);
+        }
+        [data-theme="alpha-style"] .user-dropdown,
+        [data-theme="alpha-glass"] .user-dropdown {
+            border-radius: var(--r-md);
+        }
+        [data-theme="alpha-style"] .settings-dropdown,
+        [data-theme="alpha-glass"] .settings-dropdown {
+            border-radius: var(--r-card);
+        }
 
-        /* Liquid Glass specific */
-        [data-theme="ios-liquid-glass"] {
+        /* Alpha Glass specific (Liquid Glass) */
+        [data-theme="alpha-glass"] {
             background-attachment: fixed;
         }
-        [data-theme="ios-liquid-glass"] .container {
+        [data-theme="alpha-glass"] .container {
             background: var(--glass-bg);
             -webkit-backdrop-filter: var(--glass-blur);
             backdrop-filter: var(--glass-blur);
@@ -777,7 +833,7 @@
             margin-top: 20px;
             margin-bottom: 20px;
         }
-        [data-theme="ios-liquid-glass"] header {
+        [data-theme="alpha-glass"] header {
             background: var(--glass-bg);
             -webkit-backdrop-filter: var(--glass-blur);
             backdrop-filter: var(--glass-blur);
@@ -785,11 +841,11 @@
             border: 1px solid var(--glass-border);
             margin-bottom: 16px;
         }
-        [data-theme="ios-liquid-glass"] .feedback-form,
-        [data-theme="ios-liquid-glass"] .feedbacks-list,
-        [data-theme="ios-liquid-glass"] .settings-dropdown,
-        [data-theme="ios-liquid-glass"] .auth-modal-content,
-        [data-theme="ios-liquid-glass"] .user-dropdown {
+        [data-theme="alpha-glass"] .feedback-form,
+        [data-theme="alpha-glass"] .feedbacks-list,
+        [data-theme="alpha-glass"] .settings-dropdown,
+        [data-theme="alpha-glass"] .auth-modal-content,
+        [data-theme="alpha-glass"] .user-dropdown {
             background: var(--glass-bg);
             -webkit-backdrop-filter: var(--glass-blur);
             backdrop-filter: var(--glass-blur);
@@ -798,45 +854,66 @@
                 0 4px 24px rgba(0, 0, 0, 0.4),
                 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
         }
-        [data-theme="ios-liquid-glass"] .rom-btn {
+        [data-theme="alpha-glass"] .rom-btn {
             background: var(--glass-bg);
             -webkit-backdrop-filter: var(--glass-blur);
             backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
         }
-        [data-theme="ios-liquid-glass"] .rom-btn:hover,
-        [data-theme="ios-liquid-glass"] .rom-btn.active {
+        [data-theme="alpha-glass"] .rom-btn:hover,
+        [data-theme="alpha-glass"] .rom-btn.active {
             background: var(--accent-primary);
             color: #fff;
         }
-        [data-theme="ios-liquid-glass"] .feedback-item {
+        [data-theme="alpha-glass"] .feedback-item {
             background: var(--glass-bg);
             -webkit-backdrop-filter: var(--glass-blur);
             backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
+            border: 1px solid var(--glass-border).
         }
-        [data-theme="ios-liquid-glass"] .site-footer {
-            border-top: 1px solid var(--glass-border);
+        [data-theme="alpha-glass"] .site-footer {
+            border-top: 1px solid var(--glass-border).
         }
-        [data-theme="ios-liquid-glass"] .status-indicator {
+        [data-theme="alpha-glass"] .status-indicator {
             background: var(--glass-bg);
             -webkit-backdrop-filter: var(--glass-blur);
             backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
+            border: 1px solid var(--glass-border).
         }
-        [data-theme="ios-liquid-glass"] .auth-modal {
+        [data-theme="alpha-glass"] .auth-modal {
             background: rgba(0, 0, 0, 0.6);
             -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px).
         }
-        [data-theme="ios-liquid-glass"] .feedback-text {
-            color: var(--fg);
+        [data-theme="alpha-glass"] .feedback-text {
+            color: var(--fg).
         }
-        [data-theme="ios-liquid-glass"] .comment-item {
+        [data-theme="alpha-glass"] .comment-item {
             background: var(--glass-bg);
             -webkit-backdrop-filter: var(--glass-blur);
             backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
+            border: 1px solid var(--glass-border).
+        }
+        [data-theme="alpha-glass"] .android-badge {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border).
+        }
+        [data-theme="alpha-glass"] .device-badge {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border).
+        }
+        [data-theme="alpha-glass"] .btn-submit,
+        [data-theme="alpha-glass"] .auth-submit {
+            background: var(--accent-primary);
+            color: #fff.
+        }
+        [data-theme="alpha-glass"] .telegram-btn {
+            background: var(--accent-primary);
+            color: #fff.
         }
 
     </style>
@@ -883,11 +960,11 @@
                         <button class="theme-btn" data-theme="green" title="Green">
                             <span>Green</span>
                         </button>
-                        <button class="theme-btn" data-theme="ios-dark" title="iOS Dark (Alpha Style)">
-                            <span>iOS Dark</span>
+                        <button class="theme-btn" data-theme="alpha-style" title="Alpha Style (alphas-trashdump)">
+                            <span>Alpha Style</span>
                         </button>
-                        <button class="theme-btn" data-theme="ios-liquid-glass" title="iOS 26 Liquid Glass">
-                            <span>Liquid Glass</span>
+                        <button class="theme-btn" data-theme="alpha-glass" title="Alpha Glass (Liquid Glass)">
+                            <span>Alpha Glass</span>
                         </button>
                     </div>
                 </div>
