@@ -17,7 +17,7 @@ const db = getDatabase(app);
 const auth = getAuth(app);
 const feedbacksRef = ref(db, 'feedbacks');
 
-const ROMS = ["HyperOS 1.0.2.0", "HyperOS 2.0.6.0", "HyperOS 2.0.8.0", "HyperOS 2.0.224", "HyperOS 3.0.313", "Pitch Black Recovery"];
+const ROMS = ["HyperOS 3.0.313", "HyperOS 2.0.224", "HyperOS 2.0.8.0", "HyperOS 2.0.6.0", "HyperOS 1.0.2.0", "Pitch Black Recovery"];
 
 function romBadge(r) {
     if (r.indexOf('Recovery') > -1) return '<span class="badge" style="background:#7b2ff7">S7/N7</span>';
