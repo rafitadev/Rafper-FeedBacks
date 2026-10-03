@@ -17,7 +17,14 @@ const db = getDatabase(app);
 const auth = getAuth(app);
 const feedbacksRef = ref(db, 'feedbacks');
 
-const ROMS = ["HyperOS 1.0.2.0", "HyperOS 2.0.6.0", "HyperOS 2.0.8.0", "HyperOS 2.0.224", "Pitch Black Recovery"];
+const ROMS = ["HyperOS 1.0.2.0", "HyperOS 2.0.6.0", "HyperOS 2.0.8.0", "HyperOS 2.0.224", "HyperOS 3.0.313", "Pitch Black Recovery"];
+
+function romBadge(r) {
+    if (r.indexOf('Recovery') > -1) return '<span class="badge" style="background:#7b2ff7">S7/N7</span>';
+    if (r.indexOf('3.0.313') > -1) return '<span class="badge">16</span>';
+    if (r.indexOf('2.0.224') > -1) return '<span class="badge">15</span>';
+    return '<span class="badge">14</span>';
+}
 
 let currentUser = null;
 let allFeedbacks = [];
@@ -450,11 +457,7 @@ function render() {
         <div class="seg__thumb"></div>
         <button type="button" class="seg__it" data-rom="all" aria-selected="${selectedRom === 'all'}">${t('all_roms')}</button>
         ${ROMS.map(r => `
-        <button type="button" class="seg__it" data-rom="${escapeHtml(r)}" aria-selected="${selectedRom === r}">${escapeHtml(r)}
-            ${r.indexOf('Recovery') > -1
-                ? '<span class="badge" style="background:#7b2ff7">S7/N7</span>'
-                : '<span class="badge">' + (r.indexOf('2.0.224') > -1 ? '15' : '14') + '</span>'}
-        </button>`).join('')}
+        <button type="button" class="seg__it" data-rom="${escapeHtml(r)}" aria-selected="${selectedRom === r}">${escapeHtml(r)}${romBadge(r)}</button>`).join('')}
     </div>
 
     <div class="cap">${t('submit_feedback')}</div>
